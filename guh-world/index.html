@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#102b3d">
+<title>GUH WORLD — UNEMPLOYMENT</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#080c13;color:#f4f8ff;font-family:ui-rounded,system-ui,-apple-system,Arial,sans-serif;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+#gameWrap{height:100dvh;min-height:390px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:calc(env(safe-area-inset-top) + 9px) 12px calc(env(safe-area-inset-bottom) + 9px);background:radial-gradient(ellipse 95% 70% at 50% 35%,#1a2635 0%,#0d1520 55%,#080c13 100%)}
+#topbar{width:min(100%,450px);display:flex;justify-content:space-between;align-items:center;min-height:46px;padding:0 4px}.brand{display:flex;align-items:center;gap:9px}.brandIcon{width:39px;height:39px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#273b4b,#121e2a);border:1px solid #83c5e052;box-shadow:inset 0 1px #d9faff22}.brandIcon .catMark{width:30px;height:30px}.brand b{display:block;font-size:15px;line-height:1.05;font-weight:1000;letter-spacing:1.1px}.brand small{display:block;font-size:8px;color:#9bb2c4;font-weight:800;letter-spacing:1.3px;margin-top:5px}.tag{border:1px solid #66859960;background:#1c2936a6;border-radius:999px;padding:7px 10px;color:#c6d6e3;font-size:9px;font-weight:900;letter-spacing:1.15px;display:flex;gap:7px;align-items:center}.liveDot{height:6px;width:6px;background:#91e9d3;border-radius:50%;box-shadow:0 0 8px #91e9d388}
+#stage{width:min(100%,calc((100dvh - 82px)*.75),450px);aspect-ratio:3/4;position:relative;overflow:hidden;border:1px solid #90a8b6a6;border-radius:19px;background:#9ad2ed;box-shadow:0 0 0 5px #162331,0 0 0 6px #4c647251,0 22px 50px #000b;isolation:isolate}#stage:after{content:'';position:absolute;inset:0;border:1px solid #e5faff33;border-radius:18px;pointer-events:none;z-index:6}canvas{width:100%;height:100%;display:block;image-rendering:pixelated}
+#hud{position:absolute;z-index:2;inset:0 0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:9px;pointer-events:none}.score{background:linear-gradient(145deg,#101b2aee,#203144dd);border:1px solid #b2d6e16b;border-radius:11px;padding:7px 10px;min-width:100px;box-shadow:0 4px 16px #06122235;display:flex;flex-direction:column;gap:1px}.score small{font-size:8px;letter-spacing:1.3px;color:#b5d5e4;font-weight:900}.score strong{font-size:26px;line-height:1.13;color:#fff;letter-spacing:-.7px;font-weight:1000;font-variant-numeric:tabular-nums}.score small:last-child{color:#91b6c9}.stats{display:flex;gap:5px}.stat{height:35px;display:flex;align-items:center;gap:4px;padding:4px 8px;border:1px solid #b2d6e16b;border-radius:10px;background:linear-gradient(145deg,#101b2aef,#203144dd);box-shadow:0 4px 16px #06122235}.stat .catMark{width:25px;height:25px;overflow:visible;flex-shrink:0}.stat b{font-size:15px;font-weight:1000;min-width:10px}#power{position:absolute;z-index:2;left:9px;top:76px;display:flex;align-items:center;gap:6px;border:1px solid #96cce268;border-radius:999px;background:#132439db;padding:5px 9px;font-size:8px;font-weight:1000;letter-spacing:.9px;color:#d7f7ff}.dropletMark{font-size:12px}.powerTrack{width:44px;height:5px;border-radius:9px;overflow:hidden;background:#476178}.powerTrack>span{display:block;width:100%;height:100%;border-radius:9px;background:linear-gradient(90deg,#3baddd,#a7f0ff)}#mute{position:absolute;z-index:3;top:53px;right:9px;min-width:29px;height:26px;border:1px solid #a3cde36b;border-radius:9px;background:#14263adc;color:#f1faff;font-size:13px}
+#controls{position:absolute;bottom:0;left:0;right:0;z-index:3;height:95px;padding:11px 15px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px;background:linear-gradient(180deg,#2c3c4b 0%,#152230 12%,#0e1825 100%);border-top:2px solid #8db8c9;box-shadow:0 -8px 25px #17202b2b;touch-action:none}#controls:before{content:'';position:absolute;inset:7px 9px 7px;border:1px solid #93c7d528;border-radius:13px;pointer-events:none}.control{position:relative;z-index:1;width:97px;height:66px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;border:1.5px solid #b8e4f5;border-radius:17px;color:#f8fcff;background:linear-gradient(150deg,#4c8fb1 0%,#26506f 55%,#1a344e 100%);box-shadow:inset 0 2px #ffffff4a,0 4px 0 #07111c,0 7px 12px #0008;touch-action:none;cursor:pointer;-webkit-touch-callout:none}.controlLetter{font-size:28px;line-height:1;font-weight:1000;text-shadow:0 2px #152d45}.controlText{font-size:9px;letter-spacing:1.5px;font-weight:1000;margin-top:3px}.control.down,.control:active{transform:translateY(3px);box-shadow:inset 0 2px #ffffff40,0 1px 0 #07111c;background:linear-gradient(150deg,#64b7d3,#30698a)}#dash{border-color:#e1b4dc;background:linear-gradient(150deg,#956ba1,#634775 60%,#3e345a)}#dash.down,#dash:active{background:linear-gradient(150deg,#b884bc,#76558b)}.deckTitle{display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none;min-width:0}.deckGlyph{font-size:20px;filter:drop-shadow(0 0 5px #6adfff44)}.deckTitle b{font-size:10px;font-weight:1000;letter-spacing:1.4px;color:#d6e5ed;white-space:nowrap}.deckTitle small{font-size:6px;font-weight:900;letter-spacing:1px;color:#839dac;white-space:nowrap}
+#overlay{position:absolute;z-index:5;inset:0;display:grid;place-items:center;padding:18px;background:linear-gradient(180deg,#07121bb9,#0b1725d9)}#panel{width:100%;max-width:355px;padding:26px 15px;text-align:center;border:1px solid #99d8eb9c;border-radius:20px;background:linear-gradient(155deg,#1c3243f5,#0e1b2af7);box-shadow:inset 0 1px #ffffff24,0 12px 0 #09111b,0 22px 45px #000a}.eyebrow{font-size:9px;font-weight:1000;letter-spacing:2px;color:#8adbf4}#panel h1{font-size:clamp(30px,8vw,44px);line-height:1;margin:12px 0 5px;letter-spacing:-.8px;color:#fff}#panel h2{font-size:clamp(15px,4vw,20px);color:#ffc3d5;margin:6px 0 18px}#panel p{font-size:11px;line-height:1.8;letter-spacing:.45px;color:#c5d9e6;font-weight:750;margin:10px 0 20px}#panel button{min-height:48px;padding:12px 25px;border:1px solid #baf4ff;border-radius:12px;background:linear-gradient(#a5edfa,#62c6e7);color:#0c2d40;font-size:14px;letter-spacing:1px;font-weight:1000;box-shadow:0 4px #287b99;cursor:pointer}#panel small{display:block;margin-top:16px;font-size:9px;letter-spacing:1px;color:#a2bccc;font-weight:800}#toast{display:none!important}
+@media(max-height:700px){#gameWrap{gap:5px}#stage{width:min(100%,calc((100dvh - 70px)*.75),450px)}#topbar{min-height:37px}.brandIcon{width:33px;height:33px}#controls{height:80px;padding:7px 13px 9px}.control{height:58px;width:84px}.deckTitle small{font-size:5px}#power{top:69px}}
+
+/* V11: generous thumb targets across the whole controller deck */
+#controls{height:112px;padding:7px 8px 9px;gap:6px;align-items:stretch}
+#controls:before{display:none}
+.control{flex:1 1 0;width:auto;min-width:0;height:100%;border-radius:19px;border-width:2px;touch-action:none}
+.controlLetter{font-size:38px}.controlText{font-size:11px;letter-spacing:1.6px;margin-top:4px}
+.control *{pointer-events:none}
+.deckTitle{flex:0 0 68px;justify-content:center;overflow:hidden}.deckTitle b{font-size:8px;letter-spacing:.6px}.deckTitle small{display:none}.deckGlyph{font-size:18px}
+@media(max-height:700px){#controls{height:96px;padding:5px 7px 7px}.control{height:100%;width:auto}.controlLetter{font-size:32px}.deckTitle{flex-basis:52px}}
+
+/* Finished mobile presentation: large thumb controls, quiet HUD, integrated frame */
+#gameWrap{gap:0;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);background:radial-gradient(ellipse at 50% 18%,#213949 0%,#0c1926 55%,#070b12 100%)}
+#topbar{width:min(100%,480px);padding:9px 17px;min-height:59px}.brand b{font-size:16px;letter-spacing:1.5px}.brand small{color:#92b7c8}.tag{background:#142835;border-color:#527a8b}
+#stage{width:min(100vw,calc((100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 70px)*.75),480px);border:0;border-radius:16px;box-shadow:0 0 0 1px #8ccfe850,0 22px 65px #0009}
+#stage:after{border-color:#ffffff16}#hud{padding:11px}.score{padding:7px 10px;min-width:0;border-radius:12px;background:#102333e9;border-color:#9cdeee65}.score strong{font-size:25px}.stat{background:#102333e9;border-color:#9cdeee65;border-radius:11px}
+#power{left:11px;top:75px;background:#102b3bdc;padding:5px 8px}#mute{right:11px;top:76px}
+#controls{height:116px;padding:9px 10px 10px;gap:9px;background:linear-gradient(180deg,#243d4a,#0d1c2a 16%,#0a1623);border-top:2px solid #87d6e5}
+.control{height:100%;width:auto;flex:1 1 0;border-radius:19px;box-shadow:inset 0 2px #ffffff4b,0 4px 0 #08131b,0 8px 14px #0005}
+#jump{background:linear-gradient(165deg,#78d0e9,#287d9f 56%,#17516e);border-color:#c4f5ff}#dash{background:linear-gradient(165deg,#c09ed7,#86649f 56%,#58416f);border-color:#e9d6fa}
+.controlLetter{font-size:39px}.controlText{font-size:11px}.deckTitle{flex:0 0 46px}.deckTitle b{font-size:7px}.deckGlyph{font-size:19px}
+#overlay{bottom:116px}#panel{border-radius:22px;background:linear-gradient(155deg,#20384bed,#101e2ef5);box-shadow:0 18px 45px #0009}#panel button{width:min(100%,260px);min-height:55px;border-radius:15px}
+@media(max-height:740px){#topbar{min-height:42px;padding:4px 14px}.brandIcon{width:31px;height:31px}.brandIcon .catMark{width:25px;height:25px}.brand b{font-size:13px}.brand small{font-size:7px}.tag{font-size:8px;padding:5px 8px}#stage{width:min(100vw,calc((100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 48px)*.75),480px)}#controls{height:100px;padding:6px 8px 8px}#overlay{bottom:100px}.controlLetter{font-size:33px}.controlText{font-size:9px}}
+@media(max-width:360px){.deckTitle{flex-basis:35px}.deckTitle b{font-size:6px}.control{border-radius:15px}#hud{padding:8px}.score strong{font-size:22px}}
+
+/* FINAL UI corrections: clear two-thumb controls; wordmarks instead of emoji. */
+#controls{gap:12px;padding-inline:12px;justify-content:space-between}
+#controls .control{flex:1 1 0;max-width:none;min-width:0;touch-action:none;-webkit-user-select:none;user-select:none}
+#topbar .brand{gap:0}
+.stats .stat{min-width:0;width:auto;height:40px;gap:6px;padding:4px 9px;display:flex;align-items:center}
+.stats .statLabel{font-size:8px;letter-spacing:1px;color:#a8dbed;font-weight:800;white-space:nowrap}
+.stats .stat b{font-size:19px;font-variant-numeric:tabular-nums}
+#mute{width:40px;font-size:10px;letter-spacing:.5px;font-weight:800}
+#panel p{line-height:1.55}
+@media(max-width:370px){.stats .stat{padding:3px 6px}.stats .statLabel{font-size:7px;letter-spacing:.4px}.stats .stat b{font-size:16px}#controls{gap:9px;padding-inline:9px}}
+
+
+/* Big 2-button deck only */
+#controls{height:118px;padding:8px 10px 10px;gap:12px;display:flex;align-items:stretch;justify-content:space-between}#controls:before{display:none}.control{flex:1 1 0;width:auto;min-width:0;height:100%;border-radius:22px;border-width:2px}.controlLetter{font-size:46px;line-height:1}.controlText{font-size:12px;letter-spacing:1.8px;margin-top:6px}.control *{pointer-events:none}@media(max-height:700px){#controls{height:100px;padding:6px 8px 8px}.controlLetter{font-size:38px}.controlText{font-size:10px}}
+
+
+.roseMark,
+/* Pixel rose from the supplied V2-V4 reference screenshot. */
+.roseMark,.roseAccent{
+  display:inline-block;
+  width:30px;
+  height:32px;
+  flex:0 0 auto;
+  vertical-align:middle;
+  background:url("data:image/png;base64,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") center/30px 32px no-repeat;
+  image-rendering:pixelated;
+  font-size:0;
+}
+.roseAccent{
+  width:24px;
+  height:26px;
+  margin-left:3px;
+  background-size:24px 26px;
+}
+
+</style>
+</head>
+<body>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<main id="gameWrap">
+ <header id="topbar"><div class="brand"><div><b>GUH WORLD</b><small>UNEMPLOYMENT · ARCADE</small></div></div><span class="tag"><span class="liveDot"></span> ONE LIFE</span></header>
+ <div id="stage"><canvas id="game" width="480" height="640" aria-label="GUH WORLD game"></canvas>
+  <div id="hud"><div class="score"><small>DISTANCE</small><strong id="distance">0m</strong><small id="best">BEST 0m</small></div><div class="stats"><span class="stat crewStat"><span class="statLabel">DROOL CREW</span><b id="cats">0</b></span><span class="stat roseStat"><span class="roseMark" aria-hidden="true"></span><b id="roses">0</b></span></div></div>
+  <div id="power" aria-label="Dash status"><span class="dropletMark"></span><span id="powerLabel">DASH</span><span class="powerTrack"><span id="powerFill"></span></span></div><button id="mute" type="button" aria-label="Toggle sound">SFX</button>
+  
+  <div id="controls"><button class="control" id="jump" type="button" aria-label="Jump"><span class="controlLetter">A</span><span class="controlText">JUMP</span></button><button class="control" id="dash" type="button" aria-label="Dash"><span class="controlLetter">B</span><span class="controlText">DASH</span></button></div><div id="overlay"><section id="panel"><span class="eyebrow">THE DROOL IS ETERNAL</span><h1>GUH WORLD</h1><h2>UNEMPLOYMENT <span class="roseAccent" aria-hidden="true"></span></h2><p>RUN FROM RESPONSIBILITY.<br>RESCUE THE CATS. NEVER CLOCK IN.</p><button id="start" type="button">START RUN →</button><small>ONE LIFE · A TO JUMP · B TO DASH</small></section></div>
+ </div>
+</main>
+<script>
+'use strict';
+const canvas=document.getElementById('game'),g=canvas.getContext('2d');
+g.imageSmoothingEnabled=false;
+const W=480,H=640,START_Y=430,GRAVITY=.56,JUMP=-12.9,BASE_SPEED=3.8;
+const el=id=>document.getElementById(id);
+const rect=(x,y,w,h)=>g.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));
+let state='menu',frame=0,cam=0,worldEnd=0,platforms=[],roses=[],cats=[],drops=[],particles=[],p=null;
+let generated=0,nextPowerAt=24,best=0,bestCats=0,sound=true,audio=null,seed=1,last=0,acc=0,noticeEnd=0;
+const keys={jump:false,dash:false};let jumpPrev=false,dashPrev=false;
+function rand(){seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296}
+function range(a,b){return a+(b-a)*rand()}
+function notice(s){} // Collectibles update the HUD silently.
+function tone(freq=500,duration=.09){if(!sound)return;try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();const osc=audio.createOscillator(),vol=audio.createGain();osc.frequency.value=freq;vol.gain.setValueAtTime(.047,audio.currentTime);vol.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+duration);osc.connect(vol);vol.connect(audio.destination);osc.start();osc.stop(audio.currentTime+duration)}catch(e){}}
+function unlockSound(){try{if(!audio)audio=new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume()}catch(e){}}
+function save(k,v){try{localStorage.setItem(k,String(v))}catch(e){}}
+function load(k){try{return Number(localStorage.getItem(k))||0}catch(e){return 0}}
+best=load('guh_unemployment_v2_best');bestCats=load('guh_unemployment_v2_cats');
+function start(){
+ unlockSound();
+ state='play';frame=0;cam=0;worldEnd=0;seed=Date.now()>>>0;
+ platforms=[];roses=[];cats=[];drops=[];particles=[];generated=0;nextPowerAt=24+Math.floor(rand()*7);
+ p={x:85,y:START_Y-55,w:39,h:55,vy:0,grounded:true,coyote:8,jumpBuffer:0,jumpAge:0,dash:0,cooldown:0,power:0,followers:0,roses:0,trail:[],distance:0};
+ platforms.push({x:0,y:START_Y,w:240,h:22});worldEnd=240;
+ // The first landing is reachable with a normal jump; every later landing follows the same rule.
+ for(let i=0;i<12;i++)generate();
+ keys.jump=false;keys.dash=false;jumpPrev=false;dashPrev=false;
+ el('overlay').style.display='none';updateHud();
+}
+function generate(){
+ const n=++generated,hard=Math.min(1,Math.max(0,(worldEnd-1500)/18000));
+ const prev=platforms[platforms.length-1];
+ // Jump travels ~150-210px at the current running speed; these gaps stay inside that envelope.
+ // Variety comes from platform length and gentle climbs/descents, not impossible gaps.
+ // Preserve the previous maximum gap and normal jump physics.
+ const gap=Math.round(range(45,70)+hard*9);
+ const phase=Math.floor(n/5)%4;
+ const rise=phase===0?-1:phase===2?1:0;
+ const dy=Math.round(range(-15,16)+rise*8);
+ const y=Math.max(315,Math.min(500,prev.y+dy));
+ // Three compact sizes. Tiny platforms are introduced gradually.
+ // Keep the original jump and dash physics; never require a power-up to cross.
+ const type=rand();
+ const tinyChance=hard*.10;
+ const shortChance=.25;
+ const width=Math.round(type<tinyChance?range(55,86):
+                        type<tinyChance+shortChance?range(90,136):
+                        range(140,186));
+ const x=prev.x+prev.w+gap;
+ const next={x,y,w:width,h:22};platforms.push(next);
+ if(n>=nextPowerAt){drops.push({x:x+width*.35,y:y-52,got:false});nextPowerAt=n+20+Math.floor(rand()*11)}
+ else if(n>1&&n%7===0)roses.push({x:x+width*.62,y:y-64,got:false});
+ else if(n>1&&n%2===0)cats.push({x:x+Math.min(85,width*.45),y:y-43,got:false});
+ worldEnd=x+width;
+}
+function updateHud(){
+ el('distance').textContent=Math.floor(p.distance/10)+'m';
+ el('best').textContent='BEST '+best+'m';
+ el('cats').textContent=p.followers;el('roses').textContent=p.roses||0;
+ el('powerLabel').textContent=p.power>0?'DROOLMAXX':p.cooldown>0?'RECHARGE':'DASH';
+ el('powerFill').style.width=(p.power>0?100:Math.max(0,100*(1-p.cooldown/85)))+'%';
+}
+function end(){
+ if(state!=='play')return;state='dead';tone(165,.22);
+ const d=Math.floor(p.distance/10);best=Math.max(best,d);bestCats=Math.max(bestCats,p.followers);
+ save('guh_unemployment_v2_best',best);save('guh_unemployment_v2_cats',bestCats);
+ el('overlay').style.display='grid';
+ el('panel').innerHTML='<h1>YOU GOT EMPLOYED.</h1><h2>'+d+'m SURVIVED</h2><p>BEST '+best+'m · DROOL CREW '+p.followers+' (RECORD '+bestCats+') · ROSES '+(p.roses||0)+'</p><button id="again" type="button">TRY AGAIN</button><small>one life. no job.</small>';
+ el('again').onclick=start;
+}
+function overlap(a,b){return a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y}
+function update(){
+ if(state!=='play')return;frame++;
+
+ if(p.cooldown>0)p.cooldown--;if(p.power>0)p.power--;
+ const speed=BASE_SPEED+Math.min(3.0,p.distance/11500)+(p.power>0?.45:0);
+ if(keys.jump&&!jumpPrev)p.jumpBuffer=10;
+ if(keys.dash&&!dashPrev&&p.cooldown===0){
+   const boosted=p.power>0;
+   p.dash=boosted?20:14;
+   p.dashStrength=boosted?7:4.7;
+   p.cooldown=boosted?38:85;
+   tone(boosted?750:620,.085);
+ }
+ jumpPrev=keys.jump;dashPrev=keys.dash;
+ if(p.grounded)p.coyote=8;else p.coyote=Math.max(0,p.coyote-1);
+ if(p.jumpBuffer>0)p.jumpBuffer--;
+ if(p.jumpBuffer>0&&p.coyote>0){p.vy=JUMP;p.grounded=false;p.coyote=0;p.jumpBuffer=0;p.jumpAge=0;tone(530,.08)}
+ if(!p.grounded)p.jumpAge++;
+ // A quick touch must still give a proper jump before variable-height cut applies.
+ if(!keys.jump&&p.jumpAge>12&&p.vy<-5)p.vy*=.92;
+ p.vy=Math.min(15,p.vy+GRAVITY);
+ const oldBottom=p.y+p.h;
+ const oldX=p.x;
+ const dx=speed+(p.dash>0?p.dashStrength:0);
+ if(p.dash>0)p.dash--;
+ p.x+=dx;p.y+=p.vy;p.grounded=false;
+ if(p.vy>=0){
+  for(const b of platforms){if(p.x+p.w>b.x+3&&oldX<b.x+b.w-3&&oldBottom<=b.y+5&&p.y+p.h>=b.y){p.y=b.y-p.h;p.vy=0;p.grounded=true;break}}
+ }
+ if(p.y>H+80){end();return}
+ p.distance=Math.max(p.distance,p.x-85);
+ while(worldEnd<p.x+1700)generate();
+ const target=Math.max(0,p.x-135);cam+=(target-cam)*.12;
+ // Only discard a platform when its RIGHT edge is far outside the visible viewport.
+ const safeLeft=cam-650;
+ platforms=platforms.filter(b=>b.x+b.w>=safeLeft);
+ roses=roses.filter(a=>!a.got&&a.x>=safeLeft);
+ cats=cats.filter(a=>!a.got&&a.x>=safeLeft);
+ drops=drops.filter(a=>!a.got&&a.x>=safeLeft);
+ for(const a of cats)if(Math.abs(p.x+20-a.x)<35&&Math.abs(p.y+25-a.y)<47){a.got=true;p.followers++;notice('CAT RESCUED '+p.followers);tone(670,.13)}
+ for(const a of roses)if(Math.abs(p.x+20-a.x)<35&&Math.abs(p.y+25-a.y)<46){a.got=true;p.roses=(p.roses||0)+1;notice('ROSE COLLECTED');tone(860,.13)}
+ for(const a of drops)if(Math.abs(p.x+20-a.x)<37&&Math.abs(p.y+25-a.y)<46){a.got=true;p.power=240;notice('DROOLMAXXING');tone(980,.17)}
+ p.trail.unshift({x:p.x,y:p.y});
+ if(p.trail.length>740)p.trail.pop();
+ updateHud();
+}
+function pixelCat(x,y,scale=1,flip=1,phase=0,ghost=false){
+ g.save();g.translate(Math.round(x),Math.round(y));g.scale(flip*scale,scale);
+ if(ghost)g.globalAlpha=.72;
+ const b=(x,y,w,h,c)=>{g.fillStyle=c;rect(x,y,w,h)};
+ // Character follows the supplied voxel tabby: oversized cubic head,
+ // gray striped coat, pink ears, glossy black eyes and dangling blue drool.
+ const step=phase%18<9?2:-2;
+ // tail and small body
+ b(-18,24,16,12,'#646c74');b(-23,32,17,7,'#858d94');
+ b(-9,15,39,23,'#717b84');b(-4,19,34,19,'#89939a');
+ b(2,21,13,15,'#555e67');b(22,20,8,12,'#59636c');
+ b(10,26,13,14,'#dce1df');
+ b(0,36+step,13,7,'#dfe5e4');b(21,36-step,13,7,'#ced6d7');
+ // large cubic tabby head with stepped pixel silhouette
+ b(-14,-21,51,47,'#626b74');b(-10,-27,44,53,'#818a91');
+ b(-7,-31,38,55,'#a3aaae');b(-16,-10,56,32,'#8b949a');
+ b(-13,-26,49,16,'#8c959b');
+ // block ears / pink inside
+ b(-12,-39,18,25,'#69737c');b(-8,-35,13,20,'#acb3b4');b(-5,-30,8,13,'#eacdcc');
+ b(21,-39,18,25,'#667179');b(23,-34,12,20,'#b4bbbd');b(27,-29,7,13,'#e4c4c4');
+ // characteristic tabby streaks and dark side stripes
+ b(-12,-7,9,17,'#59636d');b(-12,12,15,5,'#646e76');
+ b(-2,-26,13,4,'#606a73');b(16,-27,13,5,'#66717a');
+ b(1,-20,6,8,'#727c84');b(24,-19,6,5,'#727c84');
+ // white face stripe / muzzle
+ b(8,-16,13,29,'#d4dadd');b(14,-22,8,13,'#dfe3e4');
+ b(-4,9,43,15,'#d3dbdb');b(6,14,29,9,'#f0eeea');
+ // big glossy original black eyes
+ b(-8,-12,16,19,'#1b2026');b(-5,-14,13,18,'#080d16');
+ b(22,-12,16,19,'#1b2026');b(23,-14,13,18,'#080d16');
+ b(-3,-10,5,6,'#ffffff');b(25,-10,5,6,'#ffffff');
+ b(5,-4,2,2,'#77838b');b(34,-4,2,2,'#6c7883');
+ // pink button nose and long blue dripping drool
+ b(15,10,11,6,'#efd4c9');b(17,9,7,5,'#f2c3b9');
+ b(20,16,5,15,'#4b9ed1');b(19,27,8,11,'#71c7ef');b(20,35,7,5,'#8be1f8');
+ b(22,21,2,12,'#c7f7ff');
+ g.restore();
+}
+
+
+const ROSE_SPRITE = new Image();
+ROSE_SPRITE.src = 'data:image/png;base64,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';
+function drawRose(x,y){
+  if(!ROSE_SPRITE.complete) return;
+  g.save();
+  g.imageSmoothingEnabled=false;
+  g.drawImage(ROSE_SPRITE, Math.round(x-16), Math.round(y-34), 32, 34);
+  g.restore();
+}
+function drawDrop(x,y){g.save();g.translate(Math.round(x),Math.round(y));g.fillStyle='#237ba8';g.beginPath();g.moveTo(0,-20);g.bezierCurveTo(16,2,16,18,0,20);g.bezierCurveTo(-16,18,-16,2,0,-20);g.fill();g.fillStyle='#68d9f8';g.beginPath();g.moveTo(-2,-14);g.bezierCurveTo(9,3,11,13,0,16);g.bezierCurveTo(-11,13,-9,3,-2,-14);g.fill();g.fillStyle='#e4fbff';rect(-5,1,4,8);g.restore()}
+const skies=[['#80c4ec','#d1effa','#738fb6'],['#b9b4df','#f4d6e6','#7d84b3'],['#edb18c','#ffe2ad','#a17b9d'],['#4c689b','#a2a7ce','#3e527e']];
+function background(){
+ const index=Math.floor((p?p.distance:0)/5000)%skies.length,t=skies[index];
+ g.fillStyle=t[0];rect(0,0,W,H);
+ g.fillStyle=t[1];rect(0,530,W,110);
+ g.fillStyle=index===3?'#e8e8ff':'#ffe6b1';g.beginPath();g.arc(402,120,30,0,Math.PI*2);g.fill();
+ for(let i=0;i<11;i++){
+  const x=((i*153-cam*.16)%1700+1700)%1700-180,y=90+(i*61)%290;
+  g.fillStyle='#f1f5fa';rect(x,y,85,17);rect(x+17,y-13,54,18);
+ }
+ for(let i=0;i<12;i++){
+  const x=((i*155-cam*.32)%2000+2000)%2000-170,h=45+(i*23)%85;
+  g.fillStyle=t[2];rect(x,530-h,85,h);g.fillStyle='#d9e4e9';
+  for(let k=0;k<3;k++)rect(x+12+k*22,540-h,9,12);
+ }
+ // Void starts below the floating course; there is no solid floor.
+ g.fillStyle='#253550';rect(0,592,W,48);
+}
+function draw(){
+ background();if(!p)return;
+ g.save();g.translate(-Math.round(cam),0);
+ for(const b of platforms){if(b.x+b.w<cam-50||b.x>cam+W+50)continue;
+  g.fillStyle='#4b4868';rect(b.x+2,b.y+7,b.w-4,21);
+  g.fillStyle='#725f82';rect(b.x,b.y+9,b.w,14);
+  g.fillStyle='#9ee0a5';rect(b.x,b.y,b.w,7);
+  g.fillStyle='#4b9b78';rect(b.x,b.y+7,b.w,6);
+  g.fillStyle='#d2f2c1';rect(b.x+8,b.y+2,Math.max(8,b.w-26),2);
+  g.fillStyle='#544c72';rect(b.x+12,b.y+23,13,7);rect(b.x+b.w-26,b.y+23,13,7);
+ }
+ for(const a of roses)drawRose(a.x,a.y);
+ for(const a of drops)drawDrop(a.x,a.y);
+ for(const a of cats)pixelCat(a.x,a.y,.66,1,frame/5,true);
+ // Followers are visualized from recent player positions, capped for smooth mobile rendering.
+ // Total rescues remain unlimited and are recorded in the HUD.
+ const visible=Math.min(p.followers,34);
+ for(let k=visible;k>=1;k--){
+  const q=p.trail[Math.min(p.trail.length-1,k*12)];
+  if(q&&q.x>cam-70&&q.x<cam+W+60)pixelCat(q.x+18,q.y+18,.59,1,frame/6,true);
+ }
+ if(p.dash>0&&p.power>0){
+  g.save();g.globalAlpha=.6;
+  for(let i=1;i<=5;i++){
+   g.fillStyle=i%2?'#62dfff':'#c6f7ff';
+   rect(p.x-i*15,p.y+13+(i%3)*10,19,5);
+  }
+  g.restore();
+ }
+ pixelCat(p.x+17,p.y+18,1,1,frame/5);
+ g.restore();
+
+}
+const keyMap={Space:'jump',ArrowUp:'jump',KeyW:'jump',ShiftLeft:'dash',ShiftRight:'dash',KeyX:'dash'};
+window.addEventListener('keydown',e=>{if(keyMap[e.code]){keyboardHeld[keyMap[e.code]]=true;sync();e.preventDefault()}if(e.code==='Enter'&&state!=='play')start()});
+window.addEventListener('keyup',e=>{if(keyMap[e.code]){keyboardHeld[keyMap[e.code]]=false;sync();e.preventDefault()}});
+const pointers=new Map();
+const touchHeld={jump:false,dash:false};
+function sync(){
+ const pressed=new Set(pointers.values());
+ for(const k of ['jump','dash']){
+  touchHeld[k]=pressed.has(k);
+  keys[k]=touchHeld[k]||!!keyboardHeld[k];
+  el(k).classList.toggle('down',touchHeld[k]);
+ }
+}
+const keyboardHeld={jump:false,dash:false};
+// Each finger has its own pointer ID. Holding jump does not block dash (or vice versa).
+for(const k of ['jump','dash']){
+ const b=el(k);
+ b.addEventListener('pointerdown',e=>{
+  e.preventDefault();e.stopPropagation();
+  unlockSound();
+  try{b.setPointerCapture(e.pointerId)}catch(_){}
+  pointers.set(e.pointerId,k);
+  if(k==='jump'&&state==='play')p.jumpBuffer=10; // queue at touch-down, not next key transition
+  sync();
+ },{passive:false});
+ const release=e=>{if(pointers.has(e.pointerId)){pointers.delete(e.pointerId);sync()}e.preventDefault()};
+ b.addEventListener('pointerup',release,{passive:false});
+ b.addEventListener('pointercancel',release,{passive:false});
+ b.addEventListener('lostpointercapture',release);
+ b.addEventListener('contextmenu',e=>e.preventDefault());
+}
+window.addEventListener('blur',()=>{pointers.clear();for(const k in keyboardHeld)keyboardHeld[k]=false;sync()});
+el('start').onclick=start;
+el('mute').onclick=()=>{sound=!sound;el('mute').textContent=sound?'SFX':'OFF'};
+p={distance:0,followers:0,roses:0,power:0,trail:[]};
+function loop(now){if(!last)last=now;acc+=Math.min(80,now-last);last=now;let steps=0;while(acc>=1000/60&&steps++<4){update();acc-=1000/60}draw();requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
+
+</script>
+</body>
+</html>
