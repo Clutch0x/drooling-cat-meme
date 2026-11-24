@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>$DROOLING — the legend of drooling cat</title>
+<title>the church of the drool</title>
 <meta name="description" content="the true story of drooling cat, straight from the timeline. buy $DROOLING on Solana.">
-
 <meta property="og:type" content="website">
 <meta property="og:title" content="$DROOLING — the legend of drooling cat">
 <meta property="og:description" content="the true story of drooling cat, straight from the timeline. buy $DROOLING on Solana.">
@@ -14,498 +13,303 @@
 <meta name="twitter:title" content="$DROOLING — the legend of drooling cat">
 <meta name="twitter:description" content="the true story of drooling cat, straight from the timeline. buy $DROOLING on Solana.">
 <meta name="twitter:image" content="og-image.jpg">
-<meta name="theme-color" content="#07131c">
+<meta name="theme-color" content="#2a2520">
 <link rel="icon" href="assets/drooling-cat.jpg">
 <link rel="apple-touch-icon" href="assets/drooling-cat.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Kalam:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Special+Elite&family=Permanent+Marker&family=Caveat:wght@700&family=Bowlby+One&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://jgpolvnqzuvtwahecrcn.supabase.co">
 <style>
-  :root{
-    --bg:#07131c;
-    --bg-2:#0c2233;
-    --foam:#e7f6ff;
-    --mist:#9fd0ea;
-    --drool:#1f8fff;
-    --drool-2:#7fd4ff;
-    --drool-deep:#0b4ea8;
-    --line:rgba(150,214,255,.42);
-    --glass:rgba(10,28,44,.72);
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    min-height:100dvh;
-    font-family:'Nunito', sans-serif;
-    color:var(--foam);
-    background:
-      radial-gradient(900px 420px at 80% -10%, rgba(31,143,255,.38), transparent 60%),
-      radial-gradient(700px 380px at -10% 8%, rgba(14,90,180,.45), transparent 55%),
-      linear-gradient(180deg, #082033 0%, var(--bg) 28%, #050d14 100%);
-    -webkit-tap-highlight-color:transparent;
-    position:relative;
-  }
-  img{max-width:100%;}
-  button,input{font:inherit; color:inherit;}
-  a{color:inherit;}
-  :focus-visible{outline:3px solid var(--drool-2); outline-offset:2px;}
-  .wrap{width:min(1180px, calc(100% - 28px)); margin:0 auto;}
-  section{padding:28px 0 10px; scroll-margin-top:108px;}
-  h1,h2,p{margin:0;}
-  .display{font-family:'Fredoka', sans-serif; font-weight:700; letter-spacing:-.03em; line-height:.9;}
-  .hand{font-family:'Kalam', cursive;}
+:root{--blue:#2b4dff;--paper:#efe4cf;--ink:#1d1a16;--red:#c8361f}
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:clip}
+body{font-family:'Special Elite',monospace;color:var(--ink);background:#2a2520;
+ background-image:radial-gradient(circle at 20% 10%,rgba(255,180,90,.18),transparent 40%),radial-gradient(circle at 80% 60%,rgba(43,77,255,.12),transparent 45%)}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.22;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+.page{overflow-x:hidden;max-width:1380px;margin:0 auto;padding:20px 26px 60px}
+.sheet{position:relative;background:var(--paper);background-image:linear-gradient(rgba(0,0,0,.035) 1px,transparent 1px);background-size:100% 30px;box-shadow:0 30px 70px rgba(0,0,0,.55),inset 0 0 120px rgba(120,80,30,.25);padding:26px 40px 50px;clip-path:polygon(0 12px,3% 0,20% 7px,45% 0,70% 9px,100% 0,calc(100% - 8px) 28%,100% 62%,calc(100% - 10px) calc(100% - 14px),62% 100%,28% calc(100% - 8px),0 calc(100% - 12px),7px 58%)}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:15px;border-bottom:2px dashed var(--ink);padding-bottom:12px}
+.top nav{display:flex;gap:22px}
+.top .mk{font-family:'Permanent Marker';font-size:20px;color:var(--blue);transform:rotate(-3deg)}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;padding-top:60px;position:relative}
+.frak{font-family:UnifrakturMaguntia,serif;font-size:clamp(60px,8.4vw,128px);line-height:.85;margin:6px 0 4px;font-weight:400}
+.frak span{color:var(--blue)}
+.cutout{display:inline-block;font-family:'Bowlby One',sans-serif;font-size:30px;text-transform:uppercase;line-height:1}
+.cutout b{display:inline-block;padding:4px 8px;margin:2px;font-weight:400;box-shadow:2px 3px 0 rgba(0,0,0,.25)}
+.cutout b:nth-child(1){background:#111;color:#fff;transform:rotate(-4deg)}
+.cutout b:nth-child(2){background:#fff;transform:rotate(3deg);font-family:'Permanent Marker'}
+.cutout b:nth-child(3){background:var(--blue);color:#fff;transform:rotate(-2deg)}
+.cutout b:nth-child(4){background:#f4d03f;transform:rotate(5deg);font-family:Caveat,cursive;font-size:38px}
+.cutout b:nth-child(5){background:var(--red);color:#fff;transform:rotate(-3deg)}
+.sermon{font-size:20px;line-height:1.5;margin:22px 0 0;max-width:560px}
+.sermon mark{background:linear-gradient(transparent 55%,rgba(43,77,255,.35) 55%);color:inherit}
+.cta{display:flex;align-items:center;gap:26px;margin-top:28px;flex-wrap:wrap}
+.stampbtn{position:relative;display:inline-block;font-family:'Bowlby One',sans-serif;font-size:26px;text-transform:uppercase;padding:22px 30px;color:#fff;background:var(--blue);border:0;border-radius:6px;transform:rotate(-2deg);box-shadow:6px 7px 0 var(--ink);letter-spacing:.02em;cursor:pointer;text-align:center}
+.stampbtn:before{content:"";position:absolute;inset:6px;border:2px dashed rgba(255,255,255,.7);border-radius:4px;pointer-events:none}
+.stampbtn:active{transform:rotate(-1deg) translate(2px,2px);box-shadow:3px 3px 0 var(--ink)}
+.hand{font-family:Caveat,cursive;font-size:30px;color:var(--red);transform:rotate(-6deg);display:flex;align-items:center;gap:6px}
+.altar{position:relative;justify-self:center;width:min(500px,100%)}
+.halo{position:absolute;left:50%;top:-56px;width:70%;height:80px;transform:translateX(-50%);border-radius:50%;border:5px solid #f4c430;box-shadow:0 0 30px 8px rgba(244,196,48,.6),inset 0 0 20px rgba(244,196,48,.6);z-index:0}
+.rays{position:absolute;inset:-60px;overflow:hidden;background:repeating-conic-gradient(from 0deg,rgba(244,196,48,.28) 0 6deg,transparent 6deg 16deg);border-radius:50%;-webkit-mask:radial-gradient(circle,#000 30%,transparent 70%);mask:radial-gradient(circle,#000 30%,transparent 70%);z-index:0}
+.polaroid{position:relative;z-index:2;background:#fbf8f1;padding:16px 16px 70px;box-shadow:0 18px 40px rgba(0,0,0,.4);transform:rotate(3deg)}
+.polaroid img{display:block;width:100%;height:auto}
+.polaroid .cap{position:absolute;bottom:16px;left:0;right:0;text-align:center;font-family:'Permanent Marker';font-size:30px}
+.tape{position:absolute;width:140px;height:38px;background:rgba(240,230,170,.75);box-shadow:0 1px 3px rgba(0,0,0,.2);z-index:3;clip-path:polygon(3% 0,97% 4%,100% 50%,96% 100%,2% 96%,0 50%)}
+.t1{left:50%;top:-20px;transform:translateX(-50%) rotate(-3deg);height:34px;width:150px}.t2{display:none}
+.seal{position:absolute;z-index:4;right:-50px;bottom:-40px;width:150px;height:150px;border-radius:50%;border:4px double var(--red);color:var(--red);display:grid;place-items:center;text-align:center;font-family:'Bowlby One',sans-serif;font-size:15px;line-height:1.1;transform:rotate(-14deg);background:rgba(239,228,207,.85)}
+.seal small{display:block;font-family:'Special Elite',monospace;font-size:11px;letter-spacing:.04em}
+.candle{position:absolute;z-index:1;bottom:-10px;width:26px;height:90px;background:linear-gradient(90deg,#e9dcc0,#fff7e6,#d8c7a4);border-radius:4px}
+.candle:before{content:"";position:absolute;left:50%;top:-30px;width:16px;height:28px;transform:translateX(-50%);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:radial-gradient(circle at 50% 70%,#fff 0 15%,#ffd34d 35%,#ff7a1a 70%,transparent 72%);filter:drop-shadow(0 0 12px #ffb02e)}
+.c1{left:-56px}.c2{left:-24px;height:66px}
+.scrawl{position:absolute;font-family:"Permanent Marker";color:var(--red);font-size:44px;transform:rotate(-12deg);left:37%;top:255px;z-index:5;opacity:.9;pointer-events:none}
+h2{font-family:UnifrakturMaguntia,serif;font-size:84px;line-height:.9;font-weight:400}
+h2 small{display:block;font-family:Caveat,cursive;font-size:34px;color:var(--red)}
+.wallhead{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:70px 0 26px;flex-wrap:wrap}
+.wallhead .count{font-family:Caveat,cursive;font-size:28px;color:var(--red);margin-top:6px}
+.board{display:grid;grid-template-columns:repeat(4,1fr);gap:34px 28px;padding:10px}
+.pin{position:relative;background:#fbf8f1;padding:10px 10px 46px;box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.pin:nth-child(odd){transform:rotate(-2.5deg)}.pin:nth-child(3n){transform:rotate(2deg)}.pin:nth-child(4n){transform:rotate(-1deg) translateY(14px)}
+.pin img{display:block;width:100%;aspect-ratio:1;object-fit:cover;background:#ddd2bc}
+.pin p{position:absolute;bottom:10px;left:10px;right:10px;font-family:Caveat,cursive;font-size:24px;line-height:1}
+.pin-open{display:block;width:100%;padding:0;border:0;background:transparent;cursor:pointer;text-align:left}
+.pin:before{content:"";position:absolute;top:-12px;left:50%;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--red) 40%,#6b1408);box-shadow:2px 4px 4px rgba(0,0,0,.35);z-index:2;pointer-events:none}
+.pin:nth-child(3n+1):before{background:radial-gradient(circle at 35% 30%,#fff,var(--blue) 40%,#0b1a6b)}
+.waiting{font-family:Caveat,cursive;font-size:32px;color:var(--red);text-align:center;padding:20px 0 8px}
+.more-row{display:flex;justify-content:center;margin-top:18px}
+.more-row button{font-family:'Special Elite',monospace;background:transparent;border:0;border-bottom:2px dashed var(--ink);cursor:pointer;font-size:16px;padding:6px 4px}
+.lore>*{min-width:0}
+.lore{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:80px}
+.commandments{list-style:none;counter-reset:c}
+.commandments li{counter-increment:c;display:grid;grid-template-columns:86px 1fr;gap:10px;padding:14px 0;border-bottom:1px dashed rgba(0,0,0,.35);font-size:18px;line-height:1.45}
+.commandments li:before{content:counter(c,upper-roman)".";font-family:UnifrakturMaguntia,serif;font-size:40px;color:var(--blue);line-height:1}
+.commandments b{display:block;font-family:'Bowlby One',sans-serif;font-weight:400;font-size:15px;letter-spacing:.06em}
+.join{background:#1d1a16;color:var(--paper);padding:30px;transform:rotate(1.2deg);box-shadow:8px 10px 0 var(--blue);align-self:start}
+.join h3{font-family:'Permanent Marker';font-size:40px;font-weight:400;margin-bottom:14px}
+.join a{display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:'Bowlby One',sans-serif;font-size:26px;padding:14px 0;border-bottom:1px dashed rgba(239,228,207,.4)}
+.join a span{font-family:Caveat,cursive;font-size:24px;color:#f4c430;font-weight:700;flex:none}
+.ca{display:flex;gap:10px;align-items:center;margin-top:18px;font-size:12px;opacity:.75}
+.ca button{font:inherit;padding:4px 10px;background:var(--paper);border:0;cursor:pointer;color:var(--ink)}
+.witnesses{margin-top:76px}
+.witness-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+.witness{display:block;background:#fbf8f1;padding:16px 14px 12px;box-shadow:0 10px 20px rgba(0,0,0,.22);transform:rotate(-1.2deg)}
+.witness:nth-child(even){transform:rotate(1.3deg)}
+.witness:nth-child(3n){transform:rotate(-.4deg)}
+.witness .src-name{font-family:'Bowlby One',sans-serif;font-size:15px;letter-spacing:.04em;font-weight:400}
+.witness p{font-family:Caveat,cursive;font-size:24px;line-height:1.05;margin-top:4px}
+.crowd{margin:28px auto 0;max-width:760px;background:#fbf8f1;padding:12px 12px 36px;box-shadow:0 14px 28px rgba(0,0,0,.28);transform:rotate(-.6deg)}
+.crowd img{display:block;width:100%;height:auto}
+.crowd figcaption{font-family:'Permanent Marker';text-align:center;font-size:22px;margin-top:8px}
+.quiet{margin-top:64px;padding-top:18px;border-top:2px dashed rgba(0,0,0,.35);font-size:13px;line-height:1.5}
+.quiet-label{font-family:Caveat,cursive;font-size:28px;color:var(--red);margin-bottom:8px}
+.ticker-row{display:flex;flex-wrap:wrap;gap:8px 16px;opacity:.8;margin-bottom:10px}
+.ticker-row b{font-family:'Bowlby One',sans-serif;font-weight:400;font-size:13px;display:block}
+.chart-frame{height:240px;background:#1d1a16;box-shadow:6px 7px 0 var(--ink)}
+.chart-frame iframe{width:100%;height:100%;border:0}
+.quiet-links{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:12px}
+.quiet-links a{border-bottom:1px dashed var(--ink)}
+.disclaimer{margin-top:14px;max-width:720px;font-size:12px;opacity:.75}
+.foot{text-align:center;margin-top:60px;font-family:Caveat,cursive;font-size:28px}
+#wall,#lore,#join,#press,#chart,#gallery{scroll-margin-top:18px}
 
-  .drip-field{position:absolute; left:0; right:0; top:0; height:150px; pointer-events:none; z-index:1; overflow:hidden;}
-  .drip-field i{
-    position:absolute; top:-30px; width:14px; height:20px;
-    border-radius:40% 40% 46% 46%;
-    background:linear-gradient(#f4fbff, #49b0ff 42%, #0d5ed6);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.8);
-    animation:fall 3.4s ease-in infinite;
-    transform-origin:top center;
-  }
-  .drip-field i:nth-child(1){left:8%; animation-duration:3.8s;}
-  .drip-field i:nth-child(2){left:22%; width:10px; height:14px; animation-duration:2.8s; animation-delay:-1.1s;}
-  .drip-field i:nth-child(3){left:41%; animation-duration:4.1s; animation-delay:-2s;}
-  .drip-field i:nth-child(4){left:63%; height:26px; animation-duration:3.2s; animation-delay:-.6s;}
-  .drip-field i:nth-child(5){left:79%; width:11px; animation-duration:3.6s; animation-delay:-2.4s;}
-  .drip-field i:nth-child(6){left:92%; height:16px; animation-duration:2.9s; animation-delay:-1.7s;}
-  @keyframes fall{
-    0%{transform:translateY(0) scaleY(.7); opacity:0;}
-    18%{opacity:.9;}
-    100%{transform:translateY(120px) scaleY(1.25); opacity:0;}
-  }
+dialog{color:var(--ink);border:0;padding:0}
+dialog::backdrop{background:rgba(20,16,12,.72)}
+#submitDialog{width:min(480px,calc(100vw - 24px));background:var(--paper);box-shadow:8px 10px 0 var(--blue);margin:auto}
+.dialog-body{padding:22px 18px 18px}
+.dialog-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.dialog-top h2{font-size:54px}
+.dialog-body .lede{margin:8px 0 12px;font-size:16px;line-height:1.4}
+.drop{position:relative;display:grid;place-items:center;min-height:150px;border:2px dashed var(--blue);background:rgba(43,77,255,.05);text-align:center;padding:12px}
+.drop input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:16px}
+.drop span{font-family:Caveat,cursive;font-size:32px;color:var(--blue);pointer-events:none}
+.drop img{max-height:180px;width:auto;max-width:100%;pointer-events:none}
+.field{margin-top:12px}
+.field input{width:100%;min-height:48px;padding:10px 12px;font-size:16px;border:2px solid var(--ink);background:#fbf8f1}
+#memeStatus{min-height:1.2em;margin:10px 0;font-family:Caveat,cursive;font-size:24px;color:var(--red)}
+#submitDialog .stampbtn{width:100%;margin-top:4px}
 
-  .topbar{
-    position:sticky; top:0; z-index:40;
-    display:grid; grid-template-columns:1fr auto; grid-template-areas:"brand submit" "links links";
-    gap:6px 10px; align-items:center;
-    padding:calc(8px + env(safe-area-inset-top)) 14px 8px;
-    background:rgba(6,16,26,.9);
-    border-bottom:1px solid var(--line);
-    box-shadow:0 10px 30px rgba(0,0,0,.28);
-  }
-  .brand{grid-area:brand; display:flex; align-items:center; gap:10px; text-decoration:none; min-width:0;}
-  .brand img{
-    width:40px; height:40px; border-radius:50%; object-fit:cover; object-position:center 30%;
-    border:2px solid #bfe6ff; box-shadow:0 0 0 3px rgba(31,143,255,.35); flex:none; background:#123;
-  }
-  .brand b{font-family:'Fredoka', sans-serif; font-size:18px; letter-spacing:-.02em;}
-  .brand b span{display:block; height:4px; width:54px; margin-top:3px; border-radius:99px;
-    background:linear-gradient(90deg, #e7f7ff, #1f8fff 70%, transparent); animation:puddle 2.8s ease-in-out infinite;}
-  @keyframes puddle{50%{transform:scaleX(1.15); transform-origin:left;}}
-  .top-links{grid-area:links; display:flex; gap:16px; font-weight:800; font-size:14px;}
-  .top-links a{color:var(--mist); text-decoration:none; position:relative;}
-  .top-links a:after{
-    content:""; position:absolute; left:0; right:0; bottom:-3px; height:2px; border-radius:2px;
-    background:var(--drool-2); transform:scaleX(0); transform-origin:left; transition:transform .2s ease;
-  }
-  #openSubmit{grid-area:submit;}
-  .short{display:inline;} .long{display:none;}
+#viewer[open]{position:fixed;inset:0;display:flex;width:100vw;height:100dvh;max-width:100vw;max-height:100dvh;margin:0;background:#16130f;overflow:hidden}
+.viewer{flex:1;min-height:0;width:100%;display:flex;flex-direction:column;color:var(--paper);padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.viewer-top,.viewer-actions{display:flex;align-items:center;gap:8px;padding:10px 12px;flex:none}
+.viewer-top{justify-content:space-between}
+.viewer-who{font-family:Caveat,cursive;font-size:28px;color:#f4c430;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.viewer-top button,.viewer-actions button{min-height:46px;border:0;cursor:pointer;font-family:'Bowlby One',sans-serif;text-transform:uppercase;padding:0 14px}
+#closeViewer{background:var(--paper);color:var(--ink)}
+.viewer-stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:4px 12px}
+.viewer-stage img{max-width:100%;width:auto;height:auto;object-fit:contain;max-height:calc(100dvh - 140px - env(safe-area-inset-top) - env(safe-area-inset-bottom));background:#111}
+.viewer-actions .grow{flex:1}
+#downloadBtn{background:var(--blue);color:#fff}
+#shareBtn{background:var(--paper);color:var(--ink)}
+#viewerVote{background:transparent;color:#f4c430;border:2px dashed #f4c430}
 
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    min-height:46px; padding:10px 16px; border-radius:999px; cursor:pointer;
-    font-weight:800; font-size:15px; text-decoration:none; touch-action:manipulation;
-    border:1px solid transparent;
-  }
-  .btn:active{transform:translateY(1px) scale(.98);}
-  .btn-gel{
-    color:#04233a;
-    background:linear-gradient(180deg, #f4fbff 0%, #b6e6ff 16%, #3aa8ff 48%, #0d6fe0 100%);
-    border-color:#dff4ff;
-    box-shadow:0 8px 18px rgba(13,90,190,.4), inset 0 1px 0 rgba(255,255,255,.85);
-  }
-  .btn-ghost{
-    color:var(--foam);
-    background:rgba(255,255,255,.06);
-    border-color:var(--line);
-  }
-
-  .hero{position:relative; z-index:1; padding-top:18px;}
-  .hero-grid{position:relative; z-index:2; display:grid; grid-template-columns:1fr; gap:8px; align-items:center;}
-  h1{font-size:clamp(58px, 16vw, 112px); color:#f4fbff;}
-  h1 .wet{
-    display:block;
-    color:#7ecbff;
-    background:linear-gradient(180deg, #ffffff 0%, #9ad8ff 38%, #1576f0 100%);
-    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-  }
-  .tagline{margin-top:12px; max-width:38ch; color:#d5eeff; font-size:16px; line-height:1.45; font-weight:700;}
-  .ca{
-    margin-top:14px; display:flex; align-items:center; gap:8px; max-width:560px;
-    padding:4px 4px 4px 12px; border-radius:999px;
-    background:rgba(8,24,38,.7); border:1px solid var(--line);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
-  }
-  .ca .hand{color:var(--drool-2); flex:none; font-size:16px;}
-  .ca input{
-    flex:1; min-width:0; border:0; background:transparent; color:var(--foam);
-    font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size:16px; padding:8px 0;
-  }
-  .ca button{
-    flex:none; min-height:38px; border:0; border-radius:999px; cursor:pointer; font-weight:800;
-    padding:0 14px; color:#04233a;
-    background:linear-gradient(180deg, #fff, #8fd4ff);
-  }
-  .hero-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;}
-  .cat-plate{
-    position:relative; width:min(250px, 68vw); margin:8px auto 0; padding:8px 8px 18px;
-    border-radius:30px;
-    background:
-      linear-gradient(160deg, rgba(255,255,255,.7), rgba(255,255,255,0) 34%),
-      linear-gradient(180deg, #c6ecff, #2b93ff 42%, #0a4fb8);
-    box-shadow:0 22px 40px rgba(6,40,100,.45), inset 0 1px 0 rgba(255,255,255,.8);
-  }
-  .cat-plate img{
-    display:block; width:100%; height:auto; border-radius:22px;
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);
-  }
-  .hang{
-    position:absolute; left:22%; bottom:6px; width:14px; height:22px; border-radius:0 0 12px 12px;
-    background:linear-gradient(#7ec8ff, #1464e4); transform-origin:top center;
-    animation:hang 2.2s ease-in-out infinite;
-  }
-  .hang.d2{left:48%; height:30px; animation-delay:-.6s;}
-  .hang.d3{left:70%; width:10px; height:16px; animation-delay:-1.3s;}
-  @keyframes hang{50%{transform:scaleY(1.45);}}
-
-  .wall-head{display:flex; flex-direction:column; align-items:stretch; gap:12px; margin:8px 0 14px;}
-  .section-title{font-size:clamp(34px, 7vw, 58px); color:#f3fbff;}
-  .section-title em{
-    font-style:normal; color:#7ecbff;
-    background:linear-gradient(180deg,#fff,#49b4ff); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-  }
-  .on-dark{color:#c5e4f6; font-size:15.5px; line-height:1.45; font-weight:700; margin-top:6px;}
-  .count{margin-top:4px; color:var(--drool-2); font-family:'Kalam', cursive; font-size:18px;}
-
-  .masonry{display:flex; align-items:flex-start; gap:12px; min-height:120px;}
-  .col{flex:1 1 0; min-width:0; display:flex; flex-direction:column; gap:12px;}
-  .splash{flex:1; display:grid; place-items:center; gap:8px; padding:28px 0 10px; text-align:center;}
-  .splash p{font-family:'Kalam', cursive; font-size:22px; color:var(--drool-2);}
-  .splash-drops{display:flex; gap:8px; height:46px; align-items:flex-start;}
-  .splash-drops i{
-    width:12px; height:18px; border-radius:12px; background:linear-gradient(#fff,#1f8fff);
-    transform-origin:top; animation:hang 1s ease-in-out infinite;
-  }
-  .splash-drops i:nth-child(2){height:28px; animation-delay:-.3s;}
-  .splash-drops i:nth-child(3){animation-delay:-.6s;}
-  .tile{
-    position:relative;
-    padding:7px 7px 8px;
-    border-radius:20px;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.2), rgba(255,255,255,0) 26%),
-      linear-gradient(180deg, #12344a, #0b1d2c);
-    border:1px solid rgba(160,220,255,.4);
-    box-shadow:0 10px 22px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.28);
-    opacity:0; transform:translateY(12px);
-  }
-  .tile.in{opacity:1; transform:none; transition:opacity .45s ease, transform .35s ease, box-shadow .2s ease;}
-  .tile:after{
-    content:""; position:absolute; left:46%; bottom:-1px; width:11px; height:8px;
-    border-radius:0 0 10px 10px; background:linear-gradient(#7ec8ff,#1464e4);
-    transform:scaleY(.35); transform-origin:top; transition:transform .22s ease; pointer-events:none;
-  }
-  .tile-open{display:block; width:100%; padding:0; border:0; border-radius:14px; background:#08141e; cursor:pointer; overflow:hidden;}
-  .tile img{width:100%; height:auto; display:block; vertical-align:middle;}
-  .meme-footer{display:flex; align-items:center; justify-content:space-between; gap:6px; padding:8px 4px 2px;}
-  .meme-submitter{
-    min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-    color:var(--drool-2); font-family:'Kalam', cursive; font-weight:700; font-size:15px;
-  }
-  .vote{
-    flex:none; display:inline-flex; align-items:center; gap:5px;
-    min-height:36px; min-width:48px; padding:4px 10px; border-radius:999px; cursor:pointer;
-    border:1px solid var(--line); background:rgba(255,255,255,.06); color:var(--foam); font-weight:800;
-  }
-  .vote .mini-drop{width:8px; height:11px; border-radius:8px; background:linear-gradient(#fff,#1f8fff); display:inline-block;}
-  .vote.voted{background:linear-gradient(180deg,#e8f7ff,#7ec8ff); color:#04233a; cursor:default;}
-  .vote.voted .mini-drop{background:#0b4ea8;}
-  .dry{display:grid; justify-items:center; gap:8px; text-align:center; color:var(--drool-2); font-family:'Kalam', cursive; font-size:22px; padding:12px;}
-  .dry[hidden]{display:none;}
-  .dry-drop{width:18px; height:28px; border-radius:12px; background:linear-gradient(#fff,#1f8fff); animation:hang 1.4s ease-in-out infinite; transform-origin:top;}
-  #sentinel{height:1px;}
-  .more-row{display:flex; justify-content:center; margin:16px 0 8px;}
-
-  .panel{
-    border-radius:24px; padding:18px 14px;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,0) 24%),
-      rgba(8,22,34,.78);
-    border:1px solid var(--line);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.18), 0 16px 30px rgba(0,0,0,.2);
-  }
-  .panel h2{color:#f4fbff;}
-  .social-row{display:grid; grid-template-columns:1fr; gap:10px; margin-top:14px;}
-  .social-btn{
-    display:flex; flex-direction:column; justify-content:center; gap:2px; min-height:58px; padding:10px 14px;
-    text-decoration:none; border-radius:16px; border:1px solid var(--line);
-    background:linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.03));
-    transition:transform .18s ease, border-color .18s ease;
-  }
-  .social-btn b{font-size:16px;}
-  .social-btn small{color:var(--mist); font-weight:800;}
-  .press-grid{display:grid; grid-template-columns:1fr; gap:10px; margin-top:14px;}
-  .press-card{display:block; padding:14px; text-decoration:none; border-radius:16px; border:1px solid var(--line); background:rgba(255,255,255,.04); transition:transform .18s ease;}
-  .press-card .src-name{font-size:16px; margin-bottom:4px;}
-  .press-card p{color:var(--mist); font-size:13.5px; line-height:1.4; font-weight:700;}
-  .press-card.origin{border-color:#9ad8ff; background:linear-gradient(180deg, rgba(127,212,255,.2), rgba(255,255,255,.03));}
-  .crowd{margin:16px 0 0;}
-  .crowd img{width:100%; height:auto; display:block; border-radius:20px; border:1px solid var(--line);}
-  .crowd figcaption{margin-top:8px; text-align:center; font-family:'Kalam', cursive; color:var(--drool-2); font-size:16px;}
-
-  .ticker-row{display:flex; flex-wrap:wrap; gap:12px 18px; padding:2px 4px 12px; color:var(--mist); font-size:12.5px; font-weight:800;}
-  .ticker-row b{display:block; font-family:'Fredoka', sans-serif; font-size:16px; color:var(--foam); font-weight:600;}
-  .dot-live{display:inline-block; width:7px; height:7px; border-radius:50%; background:#7fd4ff; margin-right:5px; box-shadow:0 0 8px #7fd4ff; animation:pulse 1.6s infinite;}
-  @keyframes pulse{50%{opacity:.35;}}
-  .chart-frame{border-radius:16px; overflow:hidden; height:300px; border:1px solid var(--line); background:#071018;}
-  .chart-frame iframe{width:100%; height:100%; border:0;}
-  .chart-link{margin:12px 4px 0; font-size:14px;}
-  .chart-link a{color:var(--drool-2); font-weight:800;}
-
-  footer{padding:18px 0 calc(28px + env(safe-area-inset-bottom)); position:relative; z-index:1;}
-  .fine{color:#b7d4e6; font-size:12px; line-height:1.6; max-width:740px;}
-  .foot-links{display:flex; flex-wrap:wrap; gap:8px 16px; margin-top:10px;}
-  .foot-links a{color:var(--drool-2); font-weight:800;}
-
-  dialog{padding:0; color:var(--foam); background:#0b1c2a; border:1px solid var(--line);}
-  dialog::backdrop{background:rgba(3,8,14,.72);}
-  #submitDialog{width:min(460px, calc(100% - 20px)); border-radius:24px; margin:auto auto calc(10px + env(safe-area-inset-bottom));}
-  .dialog-body{padding:16px 14px calc(16px + env(safe-area-inset-bottom));}
-  .dialog-top{display:flex; justify-content:space-between; gap:10px; align-items:flex-start;}
-  .dialog-top h2{font-size:32px;}
-  .drop{
-    position:relative; display:grid; place-items:center; min-height:150px; margin-top:12px; overflow:hidden;
-    border-radius:18px; border:1.5px dashed #7fd4ff; background:rgba(127,212,255,.06); text-align:center; padding:12px;
-  }
-  .drop input{position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; font-size:16px;}
-  .drop span{font-weight:800; color:var(--drool-2); pointer-events:none;}
-  .drop img{max-height:180px; width:auto; max-width:100%; border-radius:12px; pointer-events:none;}
-  .field{margin-top:12px;}
-  .field input{
-    width:100%; min-height:48px; padding:10px 12px; font-size:16px; border-radius:12px;
-    border:1px solid var(--line); background:#07131c; color:var(--foam);
-  }
-  #memeStatus{min-height:1.2em; margin:10px 0; color:var(--mist); font-weight:800;}
-  #submitDialog .btn-gel{width:100%;}
-
-  #viewer[open]{
-    position:fixed; inset:0; display:flex; width:100vw; height:100dvh; max-width:100vw; max-height:100dvh;
-    margin:0; padding:0; border:0; background:#050d14; overflow:hidden;
-  }
-  .viewer{
-    flex:1; min-height:0; width:100%; display:flex; flex-direction:column; overflow:hidden;
-    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-  }
-  .viewer-top,.viewer-actions{display:flex; align-items:center; gap:8px; padding:10px 12px; flex:none;}
-  .viewer-top{justify-content:space-between;}
-  .viewer-who{font-family:'Kalam', cursive; font-size:20px; color:var(--drool-2); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-  .viewer-stage{flex:1; min-height:0; display:flex; align-items:center; justify-content:center; overflow:hidden; padding:4px 12px;}
-  .viewer-stage img{
-    max-width:100%; width:auto; height:auto; object-fit:contain; border-radius:12px;
-    max-height:calc(100dvh - 132px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-  }
-  .viewer-actions .btn{flex:1;}
-  #viewer .vote{background:#102838; min-height:46px; color:var(--foam);}
-
-  @media (hover:hover){
-    .tile.in:hover{transform:translateY(-7px); box-shadow:0 18px 34px rgba(18,110,210,.35), inset 0 1px 0 rgba(255,255,255,.4);}
-    .tile.in:hover:after{transform:scaleY(2.6);}
-    .social-btn:hover,.press-card:hover{transform:translateY(-3px); border-color:#bfe6ff;}
-    .top-links a:hover:after{transform:scaleX(1);}
-    .btn-gel:hover{filter:saturate(1.08) brightness(1.04);}
-  }
-  @media (max-width:739px){
-    .hero{padding-top:6px;}
-    h1{font-size:46px;}
-    .tagline{font-size:14.5px; margin-top:8px;}
-    .cat-plate{width:min(148px, 42vw); margin-top:4px; padding:5px 5px 14px; border-radius:22px;}
-    .cat-plate img{border-radius:16px;}
-    .hang{width:9px; height:12px;}
-    .hang.d2{height:16px;}
-    .hero-actions{display:none;}
-    .section-title{font-size:36px;}
-    section{padding-top:18px;}
-  }
-  @media (min-width:740px){
-    .social-row,.press-grid{grid-template-columns:1fr 1fr;}
-    .chart-frame{height:400px;}
-    .panel{padding:26px;}
-    .cat-plate{width:min(340px, 100%); margin:0 0 0 auto;}
-    .hero-grid{grid-template-columns:1.15fr .85fr; gap:20px;}
-    #submitDialog{margin:auto;}
-  }
-  @media (min-width:1040px){
-    .topbar{
-      grid-template-columns:auto 1fr auto;
-      grid-template-areas:"brand links submit";
-      padding-left:max(18px, calc((100% - 1180px) / 2));
-      padding-right:max(18px, calc((100% - 1180px) / 2));
-    }
-    .top-links{justify-content:flex-end; padding-right:12px;}
-    .long{display:inline;} .short{display:none;}
-    .press-grid{grid-template-columns:repeat(3, 1fr);}
-    .wall-head{flex-direction:row; align-items:flex-end; justify-content:space-between;}
-    .wall-head .btn{flex:none;}
-  }
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-    .drip-field{display:none;}
-    *, *::before, *::after{animation:none !important; transition:none !important;}
-    .tile{opacity:1; transform:none;}
-    h1 .wet, .section-title em{-webkit-text-fill-color:unset; color:#8fd4ff; background:none;}
-  }
+@media(max-width:760px){
+ .page{padding:10px 8px 30px}
+ .sheet{padding:16px 18px 30px}
+ .top{align-items:flex-start;gap:8px}
+ .top > span:last-child{margin-left:auto;max-width:48%;text-align:right;font-size:13px;line-height:1.25}
+ .top nav{display:none}
+ .hero{grid-template-columns:1fr;gap:12px}
+ .hero{padding-top:16px}.altar{order:-1;width:86%;margin:60px auto 40px}
+ .seal{width:96px;height:96px;font-size:10px;right:-14px;bottom:-66px}.rays{inset:-20px}.halo{top:-60px;height:70px}.scrawl{display:none}
+ .frak{font-size:66px}.cutout{font-size:20px}.cutout b:nth-child(4){font-size:26px}
+ .sermon{font-size:17px}.stampbtn{font-size:20px;padding:18px 20px}
+ .board{grid-template-columns:1fr 1fr;gap:26px 16px}.pin p{font-size:19px}
+ h2{font-size:56px}.lore{grid-template-columns:1fr}
+ .c1{left:-30px}.c2{left:-4px}
+ .t1,.t2{width:100px}
+ .join a{font-size:20px}
+ .witness-grid{grid-template-columns:1fr}
+ .polaroid .cap{font-size:24px}
+ .chart-frame{height:220px}
+}
+@media (prefers-reduced-motion: reduce){
+ .stampbtn:active{transform:none}
+}
 </style>
 </head>
 <body>
-<header class="topbar">
-  <a class="brand" href="#gallery">
-    <img src="assets/drooling-cat.jpg" alt="" width="1100" height="1020">
-    <b>drooling cat<span aria-hidden="true"></span></b>
-  </a>
-  <nav class="top-links" aria-label="page">
-    <a href="#gallery">wall</a>
-    <a href="#press">lore</a>
-    <a href="#community">community</a>
+<div class="page"><div class="sheet">
+<div class="top">
+  <span class="mk">guh 🥀</span>
+  <nav>
+    <a href="#wall">the wall</a>
+    <a href="#lore">the scripture</a>
+    <a href="#join">join the flock</a>
   </nav>
-  <button type="button" class="btn btn-gel" id="openSubmit"><span class="long">submit a meme</span><span class="short">submit</span></button>
-</header>
-
-<div class="wrap">
-  <section class="hero">
-    <div class="drip-field" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-    <div class="hero-grid">
-      <div>
-        <p class="hand" style="color:#7fd4ff; font-size:18px; margin-bottom:6px;">droolmaxxing</p>
-        <h1 class="display">drooling<span class="wet">cat</span></h1>
-        <p class="tagline">a fried-looking cat, jaw hanging wide open, dumb as it gets — with a big blue line of drool spilling out its mouth.</p>
-        <div class="ca">
-          <span class="hand">ca</span>
-          <input id="caInput" type="text" readonly value="B6f27ETGcjgGNB1fqULJbXVmw9FnL8HgBp7R83hmpump" aria-label="token contract address">
-          <button type="button" id="copyBtn">copy</button>
-        </div>
-        <div class="hero-actions">
-          <button type="button" class="btn btn-gel" id="openSubmit2">submit your meme</button>
-        </div>
-      </div>
-      <div class="cat-plate">
-        <img src="assets/drooling-cat.jpg" alt="the drooling cat, jaw open, one blue line of drool" width="1100" height="1020" fetchpriority="high">
-        <i class="hang" aria-hidden="true"></i>
-        <i class="hang d2" aria-hidden="true"></i>
-        <i class="hang d3" aria-hidden="true"></i>
-      </div>
-    </div>
-  </section>
-
-  <section id="gallery">
-    <div class="wall-head">
-      <div>
-        <h2 class="section-title display">wall of <em>drool</em></h2>
-        <p class="on-dark">newest first. tap a meme, save it, share it. yours waits in line until it’s approved.</p>
-        <p class="count" id="wallCount"></p>
-      </div>
-    </div>
-    <div class="masonry" id="liveGallery">
-      <div class="splash" id="loadingSplash">
-        <div class="splash-drops" aria-hidden="true"><i></i><i></i><i></i></div>
-        <p>squeezing the drool…</p>
-      </div>
-    </div>
-    <p id="galleryEmpty" class="dry" hidden><span class="dry-drop" aria-hidden="true"></span><span id="emptyText">no memes yet — be the first to submit one.</span></p>
-    <div id="sentinel" aria-hidden="true"></div>
-    <div class="more-row">
-      <button type="button" id="loadMoreBtn" class="btn btn-ghost" hidden>load more</button>
-    </div>
-  </section>
-
-  <section id="community">
-    <div class="panel">
-      <h2 class="section-title display">join the <em>community</em></h2>
-      <p class="on-dark">no roadmap meetings. just the ones who kept the drool alive.</p>
-      <div class="social-row">
-        <a class="social-btn" href="https://x.com/droolingcatCTO" target="_blank" rel="noopener"><b>x</b><small>@droolingcatCTO</small></a>
-        <a class="social-btn" href="https://www.tiktok.com/@droolingcatsol" target="_blank" rel="noopener"><b>tiktok</b><small>@droolingcatsol</small></a>
-        <a class="social-btn" href="https://t.me/droolingcatsolCTO/1" target="_blank" rel="noopener"><b>telegram</b><small>droolingcatsolCTO</small></a>
-        <a class="social-btn" href="https://x.com/i/communities/1832499000270057771" target="_blank" rel="noopener"><b>x community</b><small>the drool pile</small></a>
-      </div>
-    </div>
-  </section>
-
-  <section id="press">
-    <h2 class="section-title display">where the hunt <em>began</em></h2>
-    <p class="on-dark">feb 20, 2026. a blurry cat, jaw open, one long blue line of drool, and a post asking the internet to find it. the cat never got less fried.</p>
-    <div class="press-grid">
-      <a class="press-card origin" href="https://www.reddit.com/r/HelpMeFind/comments/1r9l4nt/low_res_image_of_cat_drooling/" target="_blank" rel="noopener">
-        <div class="src-name display">r/HelpMeFind</div>
-        <p>Feb 20, 2026 — where the hunt for the cat began</p>
-      </a>
-      <a class="press-card" href="https://knowyourmeme.com/memes/drooling-cat-crowd-of-drooling-cats" target="_blank" rel="noopener">
-        <div class="src-name display">Know Your Meme</div>
-        <p>origin entry &amp; full timeline</p>
-      </a>
-      <a class="press-card" href="https://www.yahoo.com/entertainment/articles/drooling-cat-meme-crowd-drooling-205628582.html" target="_blank" rel="noopener">
-        <div class="src-name display">Yahoo</div>
-        <p>the meme, explained</p>
-      </a>
-      <a class="press-card" href="https://cheezburger.com/45755397/new-cat-meme-drooling-cat-hits-the-internet-instantly-goes-viral-taking-over-timelines-everywhere" target="_blank" rel="noopener">
-        <div class="src-name display">Cheezburger</div>
-        <p>cites the June 7 template</p>
-      </a>
-      <a class="press-card" href="http://droolmaxxing.urbanup.com/18716368" target="_blank" rel="noopener">
-        <div class="src-name display">Urban Dictionary</div>
-        <p>"droolmaxxing," defined</p>
-      </a>
-      <a class="press-card" href="https://youtu.be/TWooDIv-KZ4" target="_blank" rel="noopener">
-        <div class="src-name display">YouTube</div>
-        <p>10-hour meme loop, fan-made</p>
-      </a>
-    </div>
-    <figure class="crowd">
-      <img src="assets/crowd.jpg" alt="a crowd of the same drooling cat" width="1022" height="663" loading="lazy" decoding="async">
-      <figcaption>the crowd showed up later. same cat. same drool.</figcaption>
-    </figure>
-  </section>
-
-  <section id="chart">
-    <h2 class="section-title display">the <em>chart</em></h2>
-    <p class="on-dark">numbers live down here. the wall is the point.</p>
-    <div class="panel" style="margin-top:12px;">
-      <div class="ticker-row" id="tickerRow">
-        <div><b><span class="dot-live"></span>loading</b>price</div>
-        <div><b>—</b>market cap</div>
-        <div><b>—</b>24h volume</div>
-        <div><b>—</b>liquidity</div>
-      </div>
-      <div class="chart-frame">
-        <iframe title="drooling cat price chart" src="https://birdeye.so/tv-widget/B6f27ETGcjgGNB1fqULJbXVmw9FnL8HgBp7R83hmpump?chain=solana&viewMode=pair&chartInterval=15&chartType=Candle&chartTimezone=UTC&chartLeftToolbar=show&theme=dark" loading="lazy" allowfullscreen></iframe>
-      </div>
-      <p class="chart-link"><a href="https://pump.fun/coin/B6f27ETGcjgGNB1fqULJbXVmw9FnL8HgBp7R83hmpump" target="_blank" rel="noopener">buy $drooling</a></p>
-    </div>
-  </section>
+  <span>vol. 1 · est. feb 20 2026</span>
 </div>
 
-<footer>
-  <div class="wrap">
-    <p class="fine">Drooling Cat ($DROOLING) is a community memecoin with no intrinsic value or expectation of financial return. this is not investment advice. crypto assets are highly volatile — only risk what you can afford to lose. always verify the contract address (B6f27ETGcjgGNB1fqULJbXVmw9FnL8HgBp7R83hmpump) independently before transacting.</p>
-    <p class="foot-links fine">
-      <a href="guh-world/">guh world</a>
-      <a href="#chart">chart</a>
-      <a href="#gallery">back to the wall</a>
-    </p>
+<header class="hero">
+  <div class="scrawl">guh!!</div>
+  <div>
+    <div class="cutout"><b>welcome</b><b>to the</b><b>holy</b><b>blessed</b><b>~</b></div>
+    <h1 class="frak">Church of<br>the <span>Drool</span></h1>
+    <p class="sermon">we gather in the name of one blurry cat. jaw open. brain off. <mark>one big blue line of drool</mark>. no sermons, no thoughts. just memes, left at the altar daily. 🥀</p>
+    <div class="cta">
+      <button type="button" class="stampbtn" id="openSubmit">submit your meme 💧</button>
+      <span class="hand">↖ leave an offering</span>
+    </div>
   </div>
-</footer>
+  <div class="altar">
+    <div class="rays"></div>
+    <div class="halo"></div>
+    <span class="candle c1"></span>
+    <span class="candle c2"></span>
+    <div class="polaroid">
+      <span class="tape t1"></span>
+      <span class="tape t2"></span>
+      <img src="assets/drooling-cat.jpg" alt="the drooling cat" width="1100" height="1020" fetchpriority="high">
+      <div class="cap">our lord of guh</div>
+    </div>
+    <div class="seal"><div>ORIGINAL<br>RELIC<small>feb 20 · 2026</small></div></div>
+  </div>
+</header>
+
+<div id="gallery">
+  <div class="wallhead" id="wall">
+    <h2><small>the wall of drool</small>Offerings <span class="count" id="wallCount"></span></h2>
+    <button type="button" class="stampbtn" id="openSubmit2">+ submit your meme</button>
+  </div>
+  <div class="board" id="liveGallery">
+    <p class="waiting" id="loadingSplash">the candles are being lit…</p>
+  </div>
+  <p id="galleryEmpty" class="waiting" hidden>the altar is bare. leave the first offering.</p>
+  <div id="sentinel" aria-hidden="true"></div>
+  <div class="more-row">
+    <button type="button" id="loadMoreBtn" hidden>more offerings</button>
+  </div>
+</div>
+
+<div class="lore" id="lore">
+  <div>
+    <h2><small>the scripture</small>The Lore</h2>
+    <ol class="commandments">
+      <li><div><b>FEB 20, 2026 · THE HUNT</b>a blurry cat appears on r/HelpMeFind. no one knows whence it came. the drool spreads anyway.</div></li>
+      <li><div><b>JUNE 2026 · THE NAMING</b>know your meme writes it into the record. cheezburger proclaims it the cat meme of 2026.</div></li>
+      <li><div><b>FALL 2026 · THE CONVERSION</b>cheez-it, axe, valorant, kfc. even the brands began to drool.</div></li>
+      <li><div><b>NOW · THE SPREADING</b>edits in every tongue. the mouth has never closed.</div></li>
+    </ol>
+  </div>
+  <div class="join" id="join">
+    <h3>join the flock</h3>
+    <div id="community">
+      <a href="https://x.com/droolingcatCTO" target="_blank" rel="noopener">𝕏 @droolingcatCTO <span>daily mass →</span></a>
+      <a href="https://www.tiktok.com/@droolingcatsol" target="_blank" rel="noopener">♪ @droolingcatsol <span>the visions →</span></a>
+      <a href="https://t.me/droolingcatsolCTO/1" target="_blank" rel="noopener">telegram <span>the vestry →</span></a>
+      <a href="https://x.com/i/communities/1832499000270057771" target="_blank" rel="noopener">x community <span>the pews →</span></a>
+    </div>
+    <div class="ca"><span>CA B6f27E…R83hmpump</span><button type="button" id="copyBtn">copy</button></div>
+  </div>
+</div>
+
+<section class="witnesses" id="press">
+  <h2><small>clipped from the record</small>Witnesses</h2>
+  <div class="witness-grid">
+    <a class="witness" href="https://www.reddit.com/r/HelpMeFind/comments/1r9l4nt/low_res_image_of_cat_drooling/" target="_blank" rel="noopener">
+      <div class="src-name">r/HelpMeFind</div>
+      <p>Feb 20, 2026 — where the hunt for the cat began</p>
+    </a>
+    <a class="witness" href="https://knowyourmeme.com/memes/drooling-cat-crowd-of-drooling-cats" target="_blank" rel="noopener">
+      <div class="src-name">Know Your Meme</div>
+      <p>origin entry &amp; full timeline</p>
+    </a>
+    <a class="witness" href="https://www.yahoo.com/entertainment/articles/drooling-cat-meme-crowd-drooling-205628582.html" target="_blank" rel="noopener">
+      <div class="src-name">Yahoo</div>
+      <p>the meme, explained</p>
+    </a>
+    <a class="witness" href="https://cheezburger.com/45755397/new-cat-meme-drooling-cat-hits-the-internet-instantly-goes-viral-taking-over-timelines-everywhere" target="_blank" rel="noopener">
+      <div class="src-name">Cheezburger</div>
+      <p>cites the June 7 template</p>
+    </a>
+    <a class="witness" href="http://droolmaxxing.urbanup.com/18716368" target="_blank" rel="noopener">
+      <div class="src-name">Urban Dictionary</div>
+      <p>"droolmaxxing," defined</p>
+    </a>
+    <a class="witness" href="https://youtu.be/TWooDIv-KZ4" target="_blank" rel="noopener">
+      <div class="src-name">YouTube</div>
+      <p>10-hour meme loop, fan-made</p>
+    </a>
+  </div>
+  <figure class="crowd">
+    <img src="assets/crowd.jpg" alt="a crowd of the same drooling cat" width="1022" height="663" loading="lazy" decoding="async">
+    <figcaption>the congregation, later</figcaption>
+  </figure>
+</section>
+
+<section class="quiet" id="chart">
+  <p class="quiet-label">the numbers, kept small</p>
+  <div class="ca" style="margin-top:0;margin-bottom:10px;opacity:1">
+    <span id="caFull">CA B6f27ETGcjgGNB1fqULJbXVmw9FnL8HgBp7R83hmpump</span>
+    <button type="button" id="copyBtn2">copy</button>
+  </div>
+  <div class="ticker-row" id="tickerRow">
+    <div><b>loading</b>price</div>
+    <div><b>—</b>market cap</div>
+    <div><b>—</b>24h volume</div>
+    <div><b>—</b>liquidity</div>
+  </div>
+  <div class="chart-frame">
+    <iframe title="drooling cat price chart" src="https://birdeye.so/tv-widget/B6f27ETGcjgGNB1fqULJbXVmw9FnL8HgBp7R83hmpump?chain=solana&viewMode=pair&chartInterval=15&chartType=Candle&chartTimezone=UTC&chartLeftToolbar=show&theme=dark" loading="lazy" allowfullscreen></iframe>
+  </div>
+  <p class="quiet-links">
+    <a href="https://pump.fun/coin/B6f27ETGcjgGNB1fqULJbXVmw9FnL8HgBp7R83hmpump" target="_blank" rel="noopener">pump.fun</a>
+    <a href="guh-world/">guh world</a>
+  </p>
+  <p class="disclaimer">Drooling Cat ($DROOLING) is a community memecoin with no intrinsic value or expectation of financial return. this is not investment advice. crypto assets are highly volatile — only risk what you can afford to lose. always verify the contract address (B6f27ETGcjgGNB1fqULJbXVmw9FnL8HgBp7R83hmpump) independently before transacting.</p>
+</section>
+
+<p class="foot">go in peace. keep ur mouth open. guh 🥀</p>
+</div></div>
 
 <dialog id="submitDialog" aria-labelledby="submitTitle">
   <form class="dialog-body" id="submitForm">
     <div class="dialog-top">
-      <h2 class="display" id="submitTitle">submit your meme</h2>
-      <button type="button" class="btn btn-ghost" id="closeSubmit">close</button>
+      <h2 id="submitTitle">an offering</h2>
+      <button type="button" id="closeSubmit">close</button>
     </div>
-    <p class="on-dark">png, jpg, webp, or gif. 10mb max. it gets reviewed before it hits the wall.</p>
+    <p class="lede">png, jpg, webp, or gif. 10mb max. it sits with the acolytes until it is approved.</p>
     <div class="drop">
       <input id="memeFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" aria-label="choose a meme image">
       <span id="dropLabel">tap to choose a picture</span>
@@ -515,52 +319,46 @@
       <input type="text" id="memeSubmitter" placeholder="your @handle (optional)" maxlength="40" autocomplete="off" aria-label="your handle, optional">
     </div>
     <p id="memeStatus" role="status"></p>
-    <button type="submit" class="btn btn-gel" id="memeSubmitBtn">submit</button>
+    <button type="submit" class="stampbtn" id="memeSubmitBtn">submit</button>
   </form>
 </dialog>
 
-<dialog id="viewer" aria-label="meme">
+<dialog id="viewer" aria-label="offering">
   <div class="viewer">
     <div class="viewer-top">
       <span class="viewer-who" id="viewerWho"></span>
-      <button type="button" class="btn btn-ghost" id="closeViewer">close</button>
+      <button type="button" id="closeViewer">close</button>
     </div>
     <div class="viewer-stage"><img id="viewerImg" alt=""></div>
     <div class="viewer-actions">
-      <button type="button" class="btn btn-gel" id="downloadBtn">download</button>
-      <button type="button" class="btn btn-ghost" id="shareBtn">share</button>
-      <button type="button" class="vote" id="viewerVote"><i class="mini-drop" aria-hidden="true"></i><span>0</span></button>
+      <button type="button" class="grow" id="downloadBtn">download</button>
+      <button type="button" class="grow" id="shareBtn">share</button>
+      <button type="button" id="viewerVote">drip <span>0</span></button>
     </div>
   </div>
 </dialog>
 
-<noscript><p class="wrap on-dark">the wall needs javascript to load memes and to take submissions.</p></noscript>
+<noscript><p class="page">the wall needs javascript to load the offerings and to take new ones.</p></noscript>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 (function(){
   const CA = "B6f27ETGcjgGNB1fqULJbXVmw9FnL8HgBp7R83hmpump";
 
-  function copyCA(){
-    const btn = document.getElementById('copyBtn');
+  function copyCA(btn){
     const done = () => {
       const old = btn.textContent;
       btn.textContent = 'copied';
       setTimeout(() => { btn.textContent = old; }, 1500);
     };
-    const input = document.getElementById('caInput');
     if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(CA).then(done).catch(() => {
-        input.focus();
-        input.select();
-      });
+      navigator.clipboard.writeText(CA).then(done).catch(() => done());
     }else{
-      input.focus();
-      input.select();
       done();
     }
   }
-  document.getElementById('copyBtn').addEventListener('click', copyCA);
+  document.getElementById('copyBtn').addEventListener('click', function(){ copyCA(this); });
+  document.getElementById('copyBtn2').addEventListener('click', function(){ copyCA(this); });
 
   function fmtNum(n, opts){
     opts = opts || {};
@@ -580,8 +378,8 @@
       const res = await fetch('https://api.dexscreener.com/latest/dex/tokens/' + CA);
       const data = await res.json();
       const pair = data && data.pairs && data.pairs.length ? data.pairs.sort((a,b)=> (b.liquidity?.usd||0)-(a.liquidity?.usd||0))[0] : null;
+      row.textContent = '';
       if(!pair){
-        row.textContent = '';
         const cell = document.createElement('div');
         const b = document.createElement('b');
         b.textContent = 'no pair yet';
@@ -592,21 +390,15 @@
       }
       const price = pair.priceUsd ? '$' + Number(pair.priceUsd).toPrecision(4) : '—';
       const bits = [
-        [price, 'price', true],
-        [fmtNum(pair.fdv || pair.marketCap, {money:true}), 'market cap', false],
-        [fmtNum(pair.volume?.h24, {money:true}), '24h volume', false],
-        [fmtNum(pair.liquidity?.usd, {money:true}), 'liquidity', false]
+        [price, 'price'],
+        [fmtNum(pair.fdv || pair.marketCap, {money:true}), 'market cap'],
+        [fmtNum(pair.volume?.h24, {money:true}), '24h volume'],
+        [fmtNum(pair.liquidity?.usd, {money:true}), 'liquidity']
       ];
-      row.textContent = '';
       bits.forEach((bit) => {
         const cell = document.createElement('div');
         const b = document.createElement('b');
-        if(bit[2]){
-          const dot = document.createElement('span');
-          dot.className = 'dot-live';
-          b.appendChild(dot);
-        }
-        b.appendChild(document.createTextNode(bit[0]));
+        b.textContent = bit[0];
         cell.appendChild(b);
         cell.appendChild(document.createTextNode(bit[1]));
         row.appendChild(cell);
@@ -617,7 +409,7 @@
       const b = document.createElement('b');
       b.textContent = '—';
       cell.appendChild(b);
-      cell.appendChild(document.createTextNode('live stats unavailable — check DexScreener'));
+      cell.appendChild(document.createTextNode('live stats unavailable'));
       row.appendChild(cell);
     }
   }
@@ -635,54 +427,36 @@
   let galleryDone = false;
   let galleryPaused = false;
   const memeById = new Map();
-  const orderedTiles = [];
-  let cols = [];
-  let colCount = 0;
   let activeId = null;
   let previewUrl = '';
-
-  function wantedCols(){
-    const w = document.documentElement.clientWidth;
-    if(w >= 1100) return 4;
-    if(w >= 740) return 3;
-    return 2;
-  }
-  function rebuildCols(){
-    const grid = document.getElementById('liveGallery');
-    const splash = document.getElementById('loadingSplash');
-    cols.forEach((col) => col.remove());
-    cols = [];
-    const n = wantedCols();
-    for(let i = 0; i < n; i++){
-      const col = document.createElement('div');
-      col.className = 'col';
-      grid.appendChild(col);
-      cols.push(col);
-    }
-    colCount = n;
-    orderedTiles.forEach((tile, index) => cols[index % n].appendChild(tile));
-    if(splash) splash.remove();
-  }
-  function ensureCols(){
-    if(wantedCols() !== colCount) rebuildCols();
-  }
-  function mountTile(tile){
-    orderedTiles.push(tile);
-    ensureCols();
-    cols[(orderedTiles.length - 1) % cols.length].appendChild(tile);
-    requestAnimationFrame(() => tile.classList.add('in'));
-  }
+  const FUN = [
+    'the congregation assembles',
+    'me at sunday service',
+    'your honor u wasn\'t even there',
+    'the choir',
+    'left at the altar',
+    'jaw still open',
+    'a vision from the pews',
+    'blessed and blurry',
+    'the hymn no one can read',
+    'an offering',
+    'mouth never closed',
+    'passed down the pew'
+  ];
 
   function cleanName(value){
     const text = String(value || '').replace(/\s+/g, ' ').trim();
     return text || 'anon';
   }
+  function captionFor(row){
+    const title = String(row.title || row.caption || '').replace(/\s+/g, ' ').trim();
+    if(title) return title.slice(0, 90);
+    return FUN[Math.abs(Number(row.id) || 0) % FUN.length];
+  }
   function setEmpty(msg){
     const emptyMsg = document.getElementById('galleryEmpty');
-    const text = document.getElementById('emptyText');
     emptyMsg.hidden = false;
-    if(text) text.textContent = msg;
-    else emptyMsg.textContent = msg;
+    emptyMsg.textContent = msg;
   }
   function getVotedIds(){
     try{ return JSON.parse(localStorage.getItem('droolingcat_upvoted') || '[]'); }
@@ -727,48 +501,39 @@
     if(splash) splash.remove();
   }
 
-  function buildTile(row, eager){
+  function buildPin(row, eager){
+    const caption = captionFor(row);
+    const who = cleanName(row.submitter);
     memeById.set(row.id, {
       id: row.id,
       image_url: row.image_url,
-      submitter: cleanName(row.submitter),
+      submitter: who,
+      caption: caption,
       votes: row.votes || 0,
       voted: hasVoted(row.id)
     });
-    const tile = document.createElement('article');
-    tile.className = 'tile';
+    const pin = document.createElement('article');
+    pin.className = 'pin';
     const open = document.createElement('button');
     open.type = 'button';
-    open.className = 'tile-open';
-    open.setAttribute('aria-label', 'view meme from ' + cleanName(row.submitter));
+    open.className = 'pin-open';
+    open.setAttribute('aria-label', 'view offering, ' + caption);
     const img = document.createElement('img');
     img.src = row.image_url;
-    img.alt = 'drooling cat meme from ' + cleanName(row.submitter);
+    img.alt = caption;
     img.decoding = 'async';
     img.loading = eager ? 'eager' : 'lazy';
     if(eager) img.fetchPriority = 'high';
+    img.addEventListener('load', () => {
+      const sentinel = document.getElementById('sentinel');
+      if(sentinel && sentinel.getBoundingClientRect().top < window.innerHeight + 900) loadMoreMemes(false);
+    });
     open.appendChild(img);
     open.addEventListener('click', () => openViewer(row.id));
-    const footer = document.createElement('div');
-    footer.className = 'meme-footer';
-    const credit = document.createElement('span');
-    credit.className = 'meme-submitter';
-    credit.textContent = cleanName(row.submitter);
-    const vote = document.createElement('button');
-    vote.type = 'button';
-    vote.className = 'vote';
-    vote.dataset.vote = String(row.id);
-    const drop = document.createElement('i');
-    drop.className = 'mini-drop';
-    drop.setAttribute('aria-hidden', 'true');
-    const count = document.createElement('span');
-    count.textContent = '0';
-    vote.append(drop, count);
-    vote.addEventListener('click', () => handleUpvote(row.id));
-    footer.append(credit, vote);
-    tile.append(open, footer);
-    paintVote(row.id);
-    return tile;
+    const cap = document.createElement('p');
+    cap.textContent = caption;
+    pin.append(open, cap);
+    return pin;
   }
 
   async function loadMoreMemes(fromUser){
@@ -777,6 +542,7 @@
     if(galleryPaused && !fromUser) return;
     galleryLoading = true;
     galleryPaused = false;
+    const board = document.getElementById('liveGallery');
     const emptyMsg = document.getElementById('galleryEmpty');
     const loadBtn = document.getElementById('loadMoreBtn');
     loadBtn.disabled = true;
@@ -794,25 +560,25 @@
       loadBtn.disabled = false;
       loadBtn.hidden = false;
       clearSkel();
-      setEmpty("couldn't reach the wall. tap load more.");
+      setEmpty('the wall would not load. tap more offerings.');
       return;
     }
     if(first){
       clearSkel();
       if(typeof count === 'number'){
-        document.getElementById('wallCount').textContent = count + (count === 1 ? ' meme on the wall' : ' memes on the wall');
+        document.getElementById('wallCount').textContent = count + (count === 1 ? ' offering' : ' offerings');
       }
     }
     const rows = data || [];
     if(first && rows.length === 0){
-      setEmpty('no memes yet — be the first to submit one.');
+      setEmpty('the altar is bare. leave the first offering.');
       galleryDone = true;
       loadBtn.hidden = true;
       galleryLoading = false;
       return;
     }
     emptyMsg.hidden = true;
-    rows.forEach((row, index) => mountTile(buildTile(row, first && index < 4)));
+    rows.forEach((row, index) => board.appendChild(buildPin(row, first && index < 4)));
     galleryOffset += rows.length;
     galleryDone = rows.length < PAGE_SIZE;
     loadBtn.hidden = galleryDone;
@@ -821,17 +587,10 @@
     if(!galleryDone){
       requestAnimationFrame(() => {
         const sentinel = document.getElementById('sentinel');
-        if(sentinel.getBoundingClientRect().top < window.innerHeight + 700) loadMoreMemes(false);
+        if(sentinel.getBoundingClientRect().top < window.innerHeight + 800) loadMoreMemes(false);
       });
     }
   }
-
-  let resizeTimer = 0;
-  window.addEventListener('resize', () => {
-    if(!orderedTiles.length) return;
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => { colCount = 0; ensureCols(); }, 140);
-  });
 
   const viewer = document.getElementById('viewer');
   const viewerImg = document.getElementById('viewerImg');
@@ -840,9 +599,11 @@
     if(!meme) return;
     activeId = id;
     viewerImg.src = meme.image_url;
-    viewerImg.alt = 'drooling cat meme from ' + meme.submitter;
-    document.getElementById('viewerWho').textContent = meme.submitter;
-    document.getElementById('viewerVote').dataset.vote = String(id);
+    viewerImg.alt = meme.caption;
+    const who = meme.submitter !== 'anon' ? meme.submitter : meme.caption;
+    document.getElementById('viewerWho').textContent = who;
+    const vote = document.getElementById('viewerVote');
+    vote.dataset.vote = String(id);
     paintVote(id);
     if(typeof viewer.showModal === 'function' && !viewer.open) viewer.showModal();
     else viewer.setAttribute('open', '');
@@ -904,14 +665,14 @@
           const blob = await res.blob();
           const file = new File([blob], 'drooling-cat-' + meme.id + '.' + fileExt(meme.image_url), { type: blob.type || 'image/jpeg' });
           if(navigator.canShare && navigator.canShare({ files:[file] })){
-            await navigator.share({ files:[file], title:'drooling cat', text:'from the wall of drool' });
+            await navigator.share({ files:[file], title:'drooling cat', text:'an offering from the church of the drool' });
             return;
           }
         }catch(err){
           if(err && err.name === 'AbortError') return;
         }
         try{
-          await navigator.share({ title:'drooling cat', text:'from the wall of drool', url: meme.image_url });
+          await navigator.share({ title:'drooling cat', text:'an offering from the church of the drool', url: meme.image_url });
           return;
         }catch(err){
           if(err && err.name === 'AbortError') return;
@@ -1007,14 +768,19 @@
 
   if(!sbClient){
     clearSkel();
-    setEmpty("couldn't reach the wall. refresh in a second.");
+    setEmpty('the wall would not load. refresh in a second.');
   }else{
     document.getElementById('loadMoreBtn').addEventListener('click', () => loadMoreMemes(true));
+    const nearSentinel = () => {
+      const sentinel = document.getElementById('sentinel');
+      return sentinel.getBoundingClientRect().top < window.innerHeight + 900;
+    };
+    window.addEventListener('scroll', () => { if(nearSentinel()) loadMoreMemes(false); }, { passive: true });
     loadMoreMemes(true);
     if('IntersectionObserver' in window){
       const io = new IntersectionObserver((entries) => {
         if(entries.some((entry) => entry.isIntersecting)) loadMoreMemes(false);
-      }, { rootMargin: '800px' });
+      }, { rootMargin: '900px' });
       io.observe(document.getElementById('sentinel'));
     }
     if(location.hash === '#submit') openSubmit();
