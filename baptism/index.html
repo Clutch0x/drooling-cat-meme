@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>baptism — the church of the drool</title>
+<meta name="description" content="make a square portrait around the original drooling cat. the cat itself is never redrawn.">
+<meta name="theme-color" content="#2a2520">
+<link rel="icon" href="../assets/drooling-cat.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Special+Elite&family=Permanent+Marker&family=Caveat:wght@700&family=Bowlby+One&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#2b4dff;--paper:#efe4cf;--ink:#1d1a16;--red:#c8361f}
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:clip}
+body{font-family:'Special Elite',monospace;color:var(--ink);background:#2a2520;
+ background-image:radial-gradient(circle at 20% 10%,rgba(255,180,90,.18),transparent 40%),radial-gradient(circle at 80% 60%,rgba(43,77,255,.12),transparent 45%)}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.22;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+.page{overflow-x:hidden;max-width:1380px;margin:0 auto;padding:20px 26px 60px}
+.sheet{position:relative;background:var(--paper);background-image:linear-gradient(rgba(0,0,0,.035) 1px,transparent 1px);background-size:100% 30px;box-shadow:0 30px 70px rgba(0,0,0,.55),inset 0 0 120px rgba(120,80,30,.25);padding:26px 40px 50px;clip-path:polygon(0 12px,3% 0,20% 7px,45% 0,70% 9px,100% 0,calc(100% - 8px) 28%,100% 62%,calc(100% - 10px) calc(100% - 14px),62% 100%,28% calc(100% - 8px),0 calc(100% - 12px),7px 58%)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:15px;border-bottom:2px dashed var(--ink);padding-bottom:12px;flex-wrap:wrap}
+.top nav{display:flex;gap:18px;flex-wrap:wrap}
+.top .mk{font-family:'Permanent Marker';font-size:20px;color:var(--blue);transform:rotate(-3deg)}
+.frak{font-family:UnifrakturMaguntia,serif;font-size:clamp(52px,7vw,96px);line-height:.9;font-weight:400;margin-top:18px}
+.frak span{color:var(--blue)}
+.lede{font-size:18px;line-height:1.45;max-width:640px;margin-top:10px}
+.maker{display:grid;grid-template-columns:minmax(280px,460px) 1fr;gap:34px;align-items:start;margin-top:26px}
+.stage{background:#1d1a16;padding:12px;box-shadow:8px 10px 0 var(--blue)}
+canvas{width:100%;height:auto;display:block;background:#efe4cf}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.stampbtn{position:relative;display:inline-flex;align-items:center;justify-content:center;font-family:'Bowlby One',sans-serif;font-size:18px;text-transform:uppercase;padding:14px 16px;color:#fff;background:var(--blue);border:0;border-radius:6px;transform:rotate(-1.5deg);box-shadow:5px 6px 0 var(--ink);cursor:pointer;text-align:center;min-height:48px}
+.stampbtn:before{content:"";position:absolute;inset:5px;border:2px dashed rgba(255,255,255,.7);border-radius:4px;pointer-events:none}
+.stampbtn.ghost{background:var(--ink)}
+.note{font-family:Caveat,cursive;font-size:26px;color:var(--red);margin-top:10px}
+fieldset{border:0;border-top:2px dashed rgba(0,0,0,.35);margin:0 0 16px;padding:12px 0 0}
+legend{font-family:Caveat,cursive;font-size:30px;color:var(--red);padding-right:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:8px 12px;border:2px solid var(--ink);background:#fbf8f1;cursor:pointer;font-family:'Special Elite',monospace;font-size:15px}
+.chip[aria-pressed="true"]{background:var(--blue);color:#fff;border-color:var(--blue)}
+.colorrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px}
+.colorrow[hidden]{display:none}
+.swatch{width:44px;height:44px;border:2px solid var(--ink);cursor:pointer;padding:0}
+.colorrow input[type="color"]{width:64px;height:44px;border:2px solid var(--ink);background:#fff;padding:2px;cursor:pointer}
+.namefield{margin-top:4px}
+.namefield input{width:100%;max-width:420px;min-height:48px;font-size:16px;padding:10px 12px;border:2px solid var(--ink);background:#fbf8f1}
+.hint{font-size:13px;margin-top:6px;opacity:.8}
+@media(max-width:760px){
+ .page{padding:10px 8px 36px}
+ .sheet{padding:16px 14px 28px}
+ .maker{grid-template-columns:1fr;gap:18px}
+ .preview-col{order:-1}
+ .stampbtn{font-size:16px;padding:12px 12px}
+ .frak{font-size:58px}
+}
+@media (prefers-reduced-motion: reduce){
+ .stampbtn{transform:none}
+}
+</style>
+</head>
+<body>
+<div class="page"><div class="sheet">
+<div class="top">
+  <a class="mk" href="../">guh 🥀</a>
+  <nav>
+    <a href="../">the church</a>
+    <a href="../#wall">the wall</a>
+    <a href="../#join">join the flock</a>
+  </nav>
+  <span>baptism · the original relic</span>
+</div>
+<h1 class="frak">Baptism</h1>
+<p class="lede">dress the altar around the cat. the photo itself stays the original relic. scaling only. nothing is drawn on the face.</p>
+<div class="maker">
+  <div class="preview-col">
+    <div class="stage"><canvas id="pfp" width="1000" height="1000" aria-label="live baptism portrait"></canvas></div>
+    <div class="actions">
+      <button type="button" class="stampbtn ghost" id="shuffle">shuffle</button>
+      <button type="button" class="stampbtn" id="download">download</button>
+      <button type="button" class="stampbtn ghost" id="share">share</button>
+    </div>
+    <p class="note" id="shareNote"></p>
+  </div>
+  <form id="traits">
+    <fieldset>
+      <legend>background</legend>
+      <div class="chips" id="bgChips"></div>
+      <div class="colorrow" id="colorRow">
+        <button type="button" class="swatch" data-color="#efe4cf" style="background:#efe4cf" aria-label="cream"></button>
+        <button type="button" class="swatch" data-color="#2b4dff" style="background:#2b4dff" aria-label="drool blue"></button>
+        <button type="button" class="swatch" data-color="#c8361f" style="background:#c8361f" aria-label="relic red"></button>
+        <button type="button" class="swatch" data-color="#f4c430" style="background:#f4c430" aria-label="candle gold"></button>
+        <button type="button" class="swatch" data-color="#1d1a16" style="background:#1d1a16" aria-label="ink"></button>
+        <input id="colorPick" type="color" value="#2b4dff" aria-label="plain background color">
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>hat</legend>
+      <div class="chips" id="hatChips"></div>
+    </fieldset>
+    <fieldset>
+      <legend>side doodles</legend>
+      <div class="chips" id="doodleChips"></div>
+    </fieldset>
+    <fieldset>
+      <legend>frame</legend>
+      <div class="chips" id="frameChips"></div>
+    </fieldset>
+    <fieldset>
+      <legend>name</legend>
+      <div class="namefield">
+        <input id="nameInput" type="text" maxlength="14" placeholder="optional name along the bottom" autocomplete="off" aria-label="optional name">
+      </div>
+      <p class="hint">cutout letters. leave it blank for no name.</p>
+    </fieldset>
+  </form>
+</div>
+</div></div>
+<script>
+(function(){
+  const canvas = document.getElementById('pfp');
+  const ctx = canvas.getContext('2d');
+  const CAT_SRC = '../assets/drooling-cat.jpg';
+  const catImg = new Image();
+  let catReady = false;
+  const state = {
+    bg: 'paper',
+    color: '#2b4dff',
+    hat: 'halo',
+    doodles: ['candles', 'roses'],
+    frame: 'polaroid',
+    name: ''
+  };
+  const BGS = [
+    ['none', 'none'],
+    ['paper', 'paper zine'],
+    ['glass', 'stained glass'],
+    ['altar', 'candle altar'],
+    ['drool', 'blue drool drip'],
+    ['stars', 'starry night'],
+    ['plain', 'plain color']
+  ];
+  const HATS = [
+    ['none', 'none'],
+    ['halo', 'halo'],
+    ['mitre', 'bishop mitre'],
+    ['roses', 'crown of roses'],
+    ['party', 'party hat'],
+    ['beanie', 'beanie'],
+    ['cowboy', 'cowboy hat']
+  ];
+  const DOODLES = [
+    ['candles', 'candles'],
+    ['roses', 'roses'],
+    ['drool', 'drool droplets'],
+    ['guh', 'guh scribbles'],
+    ['stars', 'stars'],
+    ['tag', 'ransom-note name tag']
+  ];
+  const FRAMES = [
+    ['none', 'none'],
+    ['polaroid', 'taped polaroid'],
+    ['gold', 'gold relic frame'],
+    ['stamp', 'original relic stamp']
+  ];
+
+  function mulberry32(seed){
+    let a = seed >>> 0;
+    return function(){
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function hashState(){
+    const s = [state.bg, state.color, state.hat, state.doodles.join(','), state.frame].join('|');
+    let h = 2166136261;
+    for(let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
+    return h >>> 0;
+  }
+  function cleanName(value){
+    return String(value || '').replace(/#/g, '').replace(/[^a-zA-Z0-9 ']/g, '').replace(/\s+/g, ' ').trim().slice(0, 14);
+  }
+
+  function rose(g, x, y, r, rand){
+    g.save();
+    g.translate(x, y);
+    g.rotate((rand() - 0.5) * 0.6);
+    g.fillStyle = '#2d6a3a';
+    g.beginPath();
+    g.ellipse(-r * 0.15, r * 0.45, r * 0.55, r * 0.22, -0.9, 0, Math.PI * 2);
+    g.fill();
+    g.beginPath();
+    g.ellipse(r * 0.28, r * 0.42, r * 0.48, r * 0.2, 0.8, 0, Math.PI * 2);
+    g.fill();
+    const petals = ['#c8361f', '#e15a45', '#8d1d12', '#f08a78'];
+    for(let i = 0; i < 6; i++){
+      g.fillStyle = petals[i % petals.length];
+      g.beginPath();
+      g.ellipse(Math.cos(i) * r * 0.15, Math.sin(i) * r * 0.15 - r * 0.05, r * 0.34, r * 0.48, i, 0, Math.PI * 2);
+      g.fill();
+    }
+    g.fillStyle = '#f4c430';
+    g.beginPath();
+    g.arc(0, 0, r * 0.2, 0, Math.PI * 2);
+    g.fill();
+    g.restore();
+  }
+  function candle(g, x, y, h){
+    g.fillStyle = '#f7f1e4';
+    g.strokeStyle = '#1d1a16';
+    g.lineWidth = 2;
+    g.fillRect(x, y, 26, h);
+    g.strokeRect(x, y, 26, h);
+    g.fillStyle = '#fff';
+    g.fillRect(x + 6, y + 4, 6, h * 0.35);
+    g.fillStyle = '#ff9a1f';
+    g.beginPath();
+    g.ellipse(x + 13, y - 16, 9, 18, 0, 0, Math.PI * 2);
+    g.fill();
+    g.fillStyle = '#fff4c2';
+    g.beginPath();
+    g.ellipse(x + 13, y - 12, 4, 9, 0, 0, Math.PI * 2);
+    g.fill();
+  }
+  function droplet(g, x, y, s){
+    g.fillStyle = '#2b4dff';
+    g.beginPath();
+    g.moveTo(x, y - s);
+    g.bezierCurveTo(x + s * 0.95, y - s * 0.1, x + s * 0.75, y + s * 0.85, x, y + s * 1.2);
+    g.bezierCurveTo(x - s * 0.75, y + s * 0.85, x - s * 0.95, y - s * 0.1, x, y - s);
+    g.fill();
+    g.fillStyle = 'rgba(255,255,255,.5)';
+    g.beginPath();
+    g.ellipse(x - s * 0.22, y + s * 0.15, s * 0.16, s * 0.28, -0.5, 0, Math.PI * 2);
+    g.fill();
+  }
+  function star(g, x, y, r, color){
+    g.fillStyle = color;
+    g.beginPath();
+    for(let i = 0; i < 10; i++){
+      const rad = i % 2 ? r * 0.42 : r;
+      const a = -Math.PI / 2 + i * Math.PI / 5;
+      const px = x + Math.cos(a) * rad;
+      const py = y + Math.sin(a) * rad;
+      if(i === 0) g.moveTo(px, py); else g.lineTo(px, py);
+    }
+    g.closePath();
+    g.fill();
+  }
+  function tape(g, x, y, w, h, rot){
+    g.save();
+    g.translate(x, y);
+    g.rotate(rot);
+    g.fillStyle = 'rgba(240,224,150,.9)';
+    g.fillRect(-w / 2, -h / 2, w, h);
+    g.strokeStyle = 'rgba(90,70,20,.35)';
+    g.strokeRect(-w / 2, -h / 2, w, h);
+    g.restore();
+  }
+  function cutoutWord(g, text, y, maxWidth){
+    const letters = text.toUpperCase().split('');
+    const gap = 8;
+    const size = Math.min(54, Math.floor((maxWidth - gap * letters.length) / Math.max(letters.length, 1)));
+    const colors = ['#111', '#2b4dff', '#f4d03f', '#c8361f', '#fff'];
+    let width = 0;
+    letters.forEach((ch) => { width += (ch === ' ' ? size * 0.45 : size) + gap; });
+    let x = (1000 - width) / 2;
+    letters.forEach((ch, i) => {
+      if(ch === ' '){ x += size * 0.45 + gap; return; }
+      g.save();
+      g.translate(x + size / 2, y);
+      g.rotate((i % 2 ? 1 : -1) * 0.08);
+      g.fillStyle = colors[i % colors.length];
+      g.fillRect(-size / 2, -size / 2, size, size * 0.92);
+      g.fillStyle = colors[i % colors.length] === '#f4d03f' || colors[i % colors.length] === '#fff' ? '#1d1a16' : '#fff';
+      g.font = '700 ' + Math.floor(size * 0.62) + 'px "Bowlby One", sans-serif';
+      g.textAlign = 'center';
+      g.textBaseline = 'middle';
+      g.fillText(ch, 0, 2);
+      g.restore();
+      x += size + gap;
+    });
+  }
+
+  function drawBackground(g, rand){
+    if(state.bg === 'none'){
+      g.fillStyle = '#f6f0e4';
+      g.fillRect(0, 0, 1000, 1000);
+      return;
+    }
+    if(state.bg === 'plain'){
+      g.fillStyle = state.color;
+      g.fillRect(0, 0, 1000, 1000);
+      return;
+    }
+    if(state.bg === 'paper'){
+      g.fillStyle = '#efe4cf';
+      g.fillRect(0, 0, 1000, 1000);
+      g.strokeStyle = 'rgba(40,30,20,.16)';
+      g.lineWidth = 2;
+      for(let y = 36; y < 1000; y += 34){
+        g.beginPath();
+        g.moveTo(24, y);
+        g.lineTo(976, y + Math.sin(y) * 1.2);
+        g.stroke();
+      }
+      g.fillStyle = 'rgba(80,50,20,.18)';
+      for(let i = 0; i < 80; i++) g.fillRect(rand() * 1000, rand() * 1000, 2, 2);
+      return;
+    }
+    if(state.bg === 'glass'){
+      g.fillStyle = '#14181f';
+      g.fillRect(0, 0, 1000, 1000);
+      const panes = ['#2b4dff', '#7eb0ff', '#f4c430', '#c8361f', '#efe4cf', '#163a8a', '#e7f2ff'];
+      for(let row = 0; row < 8; row++){
+        for(let col = 0; col < 8; col++){
+          const x = col * 125 + (row % 2 ? 20 : 0);
+          const y = row * 125;
+          g.fillStyle = panes[Math.floor(rand() * panes.length)];
+          g.beginPath();
+          g.moveTo(x + 16, y + 8);
+          g.lineTo(x + 110, y + 18);
+          g.lineTo(x + 100, y + 112);
+          g.lineTo(x + 8, y + 100);
+          g.closePath();
+          g.fill();
+          g.strokeStyle = '#1a120c';
+          g.lineWidth = 8;
+          g.stroke();
+        }
+      }
+      return;
+    }
+    if(state.bg === 'altar'){
+      const glow = g.createLinearGradient(0, 0, 0, 1000);
+      glow.addColorStop(0, '#3a2416');
+      glow.addColorStop(1, '#140d0a');
+      g.fillStyle = glow;
+      g.fillRect(0, 0, 1000, 1000);
+      g.fillStyle = 'rgba(255,170,60,.28)';
+      g.beginPath();
+      g.ellipse(500, 620, 280, 180, 0, 0, Math.PI * 2);
+      g.fill();
+      candle(g, 70, 640, 220);
+      candle(g, 120, 700, 160);
+      candle(g, 860, 650, 210);
+      candle(g, 910, 720, 150);
+      return;
+    }
+    if(state.bg === 'drool'){
+      g.fillStyle = '#e7f3ff';
+      g.fillRect(0, 0, 1000, 1000);
+      for(let i = 0; i < 9; i++){
+        const x = 60 + i * 105 + rand() * 20;
+        const h = 180 + rand() * 420;
+        g.fillStyle = i % 2 ? '#2b4dff' : '#6aa6ff';
+        g.beginPath();
+        g.moveTo(x, -20);
+        g.lineTo(x + 28, -20);
+        g.bezierCurveTo(x + 40, h * 0.4, x + 36, h * 0.7, x + 14, h);
+        g.bezierCurveTo(x - 8, h * 0.7, x - 10, h * 0.4, x, -20);
+        g.fill();
+      }
+      return;
+    }
+    const night = g.createLinearGradient(0, 0, 0, 1000);
+    night.addColorStop(0, '#10183a');
+    night.addColorStop(1, '#070b18');
+    g.fillStyle = night;
+    g.fillRect(0, 0, 1000, 1000);
+    g.fillStyle = '#f4e7b0';
+    g.beginPath();
+    g.arc(150, 150, 48, 0, Math.PI * 2);
+    g.fill();
+    g.fillStyle = '#10183a';
+    g.beginPath();
+    g.arc(168, 138, 40, 0, Math.PI * 2);
+    g.fill();
+    for(let i = 0; i < 70; i++) star(g, rand() * 1000, rand() * 1000, 4 + rand() * 8, rand() > 0.8 ? '#f4c430' : '#f7f4ea');
+  }
+
+  function drawHat(g, cat){
+    if(state.hat === 'none') return;
+    const cx = cat.x + cat.w / 2;
+    const base = cat.y - 4;
+    g.save();
+    if(state.hat === 'halo'){
+      g.strokeStyle = '#f4c430';
+      g.lineWidth = 14;
+      g.shadowColor = 'rgba(244,196,48,.85)';
+      g.shadowBlur = 18;
+      g.beginPath();
+      g.ellipse(cx, base - 78, 168, 42, 0, 0, Math.PI * 2);
+      g.stroke();
+    }else if(state.hat === 'mitre'){
+      g.fillStyle = '#f4efe2';
+      g.strokeStyle = '#c8361f';
+      g.lineWidth = 6;
+      g.beginPath();
+      g.moveTo(cx, base - 200);
+      g.lineTo(cx + 92, base);
+      g.lineTo(cx - 92, base);
+      g.closePath();
+      g.fill();
+      g.stroke();
+      g.strokeStyle = '#f4c430';
+      g.lineWidth = 8;
+      g.beginPath();
+      g.moveTo(cx, base - 150);
+      g.lineTo(cx, base - 70);
+      g.moveTo(cx - 22, base - 112);
+      g.lineTo(cx + 22, base - 112);
+      g.stroke();
+      g.fillStyle = '#c8361f';
+      g.fillRect(cx - 70, base - 18, 140, 16);
+    }else if(state.hat === 'roses'){
+      const rand = mulberry32(hashState() ^ 99);
+      for(let i = 0; i < 7; i++){
+        const a = Math.PI + (i / 6) * Math.PI;
+        rose(g, cx + Math.cos(a) * 120, base - 36 + Math.sin(a) * 28, 26, rand);
+      }
+    }else if(state.hat === 'party'){
+      g.fillStyle = '#2b4dff';
+      g.beginPath();
+      g.moveTo(cx, base - 190);
+      g.lineTo(cx + 78, base);
+      g.lineTo(cx - 70, base);
+      g.closePath();
+      g.fill();
+      g.fillStyle = '#f4c430';
+      g.beginPath();
+      g.moveTo(cx - 8, base - 150);
+      g.lineTo(cx + 46, base - 40);
+      g.lineTo(cx + 10, base - 36);
+      g.lineTo(cx - 28, base - 140);
+      g.fill();
+      g.fillStyle = '#c8361f';
+      g.beginPath();
+      g.arc(cx, base - 198, 16, 0, Math.PI * 2);
+      g.fill();
+    }else if(state.hat === 'beanie'){
+      g.fillStyle = '#2b4dff';
+      g.beginPath();
+      g.ellipse(cx, base - 46, 120, 70, 0, Math.PI, 0);
+      g.lineTo(cx + 110, base);
+      g.lineTo(cx - 110, base);
+      g.fill();
+      g.fillStyle = '#163a8a';
+      for(let i = -3; i <= 3; i++){
+        g.fillRect(cx + i * 28 - 6, base - 70, 10, 66);
+      }
+      g.fillStyle = '#f4c430';
+      g.beginPath();
+      g.arc(cx + 78, base - 88, 18, 0, Math.PI * 2);
+      g.fill();
+      g.fillStyle = '#efe4cf';
+      g.fillRect(cx - 110, base - 16, 220, 16);
+    }else if(state.hat === 'cowboy'){
+      const brimY = base - 36;
+      g.fillStyle = '#8a5a32';
+      g.beginPath();
+      g.ellipse(cx, brimY, 168, 22, 0, 0, Math.PI * 2);
+      g.fill();
+      g.fillStyle = '#a56b3c';
+      g.beginPath();
+      g.ellipse(cx, brimY - 46, 74, 42, 0, Math.PI, 0);
+      g.lineTo(cx + 66, brimY - 8);
+      g.lineTo(cx - 66, brimY - 8);
+      g.fill();
+      g.strokeStyle = '#5c3a1e';
+      g.lineWidth = 4;
+      g.beginPath();
+      g.ellipse(cx, brimY, 168, 22, 0, 0, Math.PI * 2);
+      g.stroke();
+    }
+    g.restore();
+  }
+
+  function drawDoodles(g, cat, rand){
+    const left = cat.x - 16;
+    const right = cat.x + cat.w + 16;
+    if(state.doodles.indexOf('candles') >= 0){
+      candle(g, 46, 430, 200);
+      candle(g, 92, 500, 150);
+      candle(g, 900, 450, 190);
+    }
+    if(state.doodles.indexOf('roses') >= 0){
+      rose(g, 110, 360, 34, rand);
+      rose(g, 70, 430, 24, rand);
+      rose(g, 900, 340, 32, rand);
+      rose(g, 940, 410, 22, rand);
+    }
+    if(state.doodles.indexOf('drool') >= 0){
+      droplet(g, 80, 240, 28);
+      droplet(g, 140, 300, 18);
+      droplet(g, 930, 230, 30);
+      droplet(g, 860, 300, 16);
+      droplet(g, left - 20, cat.y + 40, 14);
+    }
+    if(state.doodles.indexOf('guh') >= 0){
+      g.save();
+      g.fillStyle = '#c8361f';
+      g.font = '64px "Permanent Marker", cursive';
+      g.translate(70, 280);
+      g.rotate(-0.35);
+      g.fillText('guh', 0, 0);
+      g.restore();
+      g.save();
+      g.fillStyle = '#2b4dff';
+      g.font = '48px "Permanent Marker", cursive';
+      g.translate(860, 300);
+      g.rotate(0.25);
+      g.fillText('guh!!', 0, 0);
+      g.restore();
+    }
+    if(state.doodles.indexOf('stars') >= 0){
+      star(g, 80, 180, 22, '#f4c430');
+      star(g, 150, 150, 14, '#2b4dff');
+      star(g, 900, 170, 24, '#f4c430');
+      star(g, 840, 230, 12, '#c8361f');
+      star(g, right + 10, cat.y + 80, 16, '#f4c430');
+    }
+    if(state.doodles.indexOf('tag') >= 0){
+      const tagName = cleanName(state.name) || 'guh';
+      g.save();
+      g.translate(36, 640);
+      g.rotate(-0.12);
+      tape(g, 70, -8, 70, 18, -0.2);
+      g.fillStyle = '#fffdf8';
+      g.fillRect(0, 0, 150, 78);
+      g.strokeStyle = '#1d1a16';
+      g.lineWidth = 3;
+      g.strokeRect(0, 0, 150, 78);
+      g.fillStyle = '#1d1a16';
+      g.font = '28px "Permanent Marker", cursive';
+      g.fillText(tagName.slice(0, 8), 12, 48);
+      g.restore();
+    }
+  }
+
+  function drawFrame(g, cat){
+    if(state.frame === 'polaroid'){
+      g.fillStyle = '#fbf8f1';
+      g.fillRect(cat.x - 28, cat.y - 36, cat.w + 56, cat.h + 110);
+      g.strokeStyle = 'rgba(0,0,0,.18)';
+      g.strokeRect(cat.x - 28, cat.y - 36, cat.w + 56, cat.h + 110);
+      tape(g, cat.x + cat.w * 0.3, cat.y - 40, 120, 28, -0.12);
+      tape(g, cat.x + cat.w * 0.72, cat.y - 34, 100, 26, 0.1);
+    }else if(state.frame === 'gold'){
+      g.strokeStyle = '#f4c430';
+      g.lineWidth = 18;
+      g.strokeRect(36, 36, 928, 928);
+      g.strokeStyle = '#8a6a12';
+      g.lineWidth = 4;
+      g.strokeRect(54, 54, 892, 892);
+      [[70, 70], [930, 70], [70, 930], [930, 930]].forEach((p) => {
+        star(g, p[0], p[1], 22, '#f4c430');
+      });
+    }else if(state.frame === 'stamp'){
+      g.save();
+      g.translate(860, 150);
+      g.rotate(-0.18);
+      g.strokeStyle = '#c8361f';
+      g.lineWidth = 6;
+      g.beginPath();
+      g.arc(0, 0, 78, 0, Math.PI * 2);
+      g.stroke();
+      g.lineWidth = 2;
+      g.beginPath();
+      g.arc(0, 0, 66, 0, Math.PI * 2);
+      g.stroke();
+      g.fillStyle = '#c8361f';
+      g.font = '16px "Bowlby One", sans-serif';
+      g.textAlign = 'center';
+      g.fillText('ORIGINAL', 0, -8);
+      g.fillText('RELIC', 0, 12);
+      g.font = '12px "Special Elite", monospace';
+      g.fillText('feb 20 · 2026', 0, 34);
+      g.restore();
+    }
+  }
+
+  function layoutCat(){
+    const w = 560;
+    const h = Math.round(w * (catImg.naturalHeight || 1020) / (catImg.naturalWidth || 1100));
+    return { x: Math.round((1000 - w) / 2), y: 250, w: w, h: h };
+  }
+
+  function render(){
+    const rand = mulberry32(hashState() || 1);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.filter = 'none';
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+    ctx.clearRect(0, 0, 1000, 1000);
+    drawBackground(ctx, rand);
+    const cat = layoutCat();
+    if(state.frame === 'polaroid' || state.frame === 'gold') drawFrame(ctx, cat);
+    drawDoodles(ctx, cat, rand);
+    if(catReady){
+      ctx.save();
+      ctx.filter = 'none';
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(catImg, cat.x, cat.y, cat.w, cat.h);
+      ctx.restore();
+    }
+    drawHat(ctx, cat);
+    if(state.frame === 'stamp') drawFrame(ctx, cat);
+    const name = cleanName(state.name);
+    if(name){
+      const y = state.frame === 'polaroid' ? cat.y + cat.h + 62 : 930;
+      cutoutWord(ctx, name, y, 760);
+    }
+  }
+
+  function chip(label, pressed){
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'chip';
+    b.textContent = label;
+    b.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+    return b;
+  }
+  function paintChips(){
+    const bgBox = document.getElementById('bgChips');
+    const hatBox = document.getElementById('hatChips');
+    const doodleBox = document.getElementById('doodleChips');
+    const frameBox = document.getElementById('frameChips');
+    bgBox.textContent = hatBox.textContent = doodleBox.textContent = frameBox.textContent = '';
+    BGS.forEach((item) => {
+      const b = chip(item[1], state.bg === item[0]);
+      b.addEventListener('click', () => { state.bg = item[0]; sync(); });
+      bgBox.appendChild(b);
+    });
+    HATS.forEach((item) => {
+      const b = chip(item[1], state.hat === item[0]);
+      b.addEventListener('click', () => { state.hat = item[0]; sync(); });
+      hatBox.appendChild(b);
+    });
+    const none = chip('none', state.doodles.length === 0);
+    none.addEventListener('click', () => { state.doodles = []; sync(); });
+    doodleBox.appendChild(none);
+    DOODLES.forEach((item) => {
+      const on = state.doodles.indexOf(item[0]) >= 0;
+      const b = chip(item[1], on);
+      b.addEventListener('click', () => {
+        const i = state.doodles.indexOf(item[0]);
+        if(i >= 0) state.doodles.splice(i, 1);
+        else state.doodles.push(item[0]);
+        sync();
+      });
+      doodleBox.appendChild(b);
+    });
+    FRAMES.forEach((item) => {
+      const b = chip(item[1], state.frame === item[0]);
+      b.addEventListener('click', () => { state.frame = item[0]; sync(); });
+      frameBox.appendChild(b);
+    });
+    document.getElementById('colorRow').hidden = state.bg !== 'plain';
+    document.getElementById('colorPick').value = /^#[0-9a-fA-F]{6}$/.test(state.color) ? state.color : '#2b4dff';
+    document.getElementById('nameInput').value = state.name;
+  }
+  function sync(){
+    paintChips();
+    render();
+  }
+
+  document.getElementById('colorPick').addEventListener('input', (event) => {
+    state.bg = 'plain';
+    state.color = event.target.value;
+    sync();
+  });
+  document.querySelectorAll('.swatch').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      state.bg = 'plain';
+      state.color = btn.getAttribute('data-color');
+      sync();
+    });
+  });
+  document.getElementById('nameInput').addEventListener('input', (event) => {
+    state.name = cleanName(event.target.value);
+    render();
+  });
+  document.getElementById('shuffle').addEventListener('click', () => {
+    const pick = (list) => list[Math.floor(Math.random() * list.length)][0];
+    state.bg = pick(BGS);
+    state.hat = pick(HATS);
+    state.frame = pick(FRAMES);
+    state.doodles = DOODLES.map((item) => item[0]).filter(() => Math.random() < 0.45);
+    const swatches = ['#efe4cf', '#2b4dff', '#c8361f', '#f4c430', '#1d1a16'];
+    if(state.bg === 'plain') state.color = swatches[Math.floor(Math.random() * swatches.length)];
+    const names = ['', 'guh', 'blessed', 'relic'];
+    state.name = names[Math.floor(Math.random() * names.length)];
+    sync();
+  });
+
+  function pngBlob(){
+    return new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+  }
+  document.getElementById('download').addEventListener('click', async () => {
+    const blob = await pngBlob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'baptism-pfp.png';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+  });
+  document.getElementById('share').addEventListener('click', async () => {
+    const note = document.getElementById('shareNote');
+    const blob = await pngBlob();
+    const file = new File([blob], 'baptism-pfp.png', { type: 'image/png' });
+    const site = 'https://droolingcatmeme.com/baptism';
+    try{
+      if(navigator.share && navigator.canShare && navigator.canShare({ files: [file] })){
+        await navigator.share({ files: [file], title: 'baptism', text: 'fresh from the church of the drool' });
+        note.textContent = 'shared.';
+        return;
+      }
+    }catch(err){
+      if(err && err.name === 'AbortError') return;
+    }
+    const intent = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent('fresh from the church of the drool') + '&url=' + encodeURIComponent(site);
+    window.open(intent, '_blank', 'noopener');
+    note.textContent = 'opened x. the portrait stays on this phone until you download it.';
+  });
+
+  catImg.onload = () => { catReady = true; render(); };
+  catImg.onerror = () => { catReady = false; render(); };
+  catImg.src = CAT_SRC;
+  document.fonts.ready.then(() => render());
+  sync();
+})();
+</script>
+</body>
+</html>
