@@ -429,29 +429,13 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
   const memeById = new Map();
   let activeId = null;
   let previewUrl = '';
-  const FUN = [
-    'the congregation assembles',
-    'me at sunday service',
-    'your honor u wasn\'t even there',
-    'the choir',
-    'left at the altar',
-    'jaw still open',
-    'a vision from the pews',
-    'blessed and blurry',
-    'the hymn no one can read',
-    'an offering',
-    'mouth never closed',
-    'passed down the pew'
-  ];
-
-  function cleanName(value){
-    const text = String(value || '').replace(/\s+/g, ' ').trim();
-    return text || 'anon';
-  }
-  function captionFor(row){
-    const title = String(row.title || row.caption || '').replace(/\s+/g, ' ').trim();
-    if(title) return title.slice(0, 90);
-    return FUN[Math.abs(Number(row.id) || 0) % FUN.length];
+  function handleInfo(raw){
+    const text = String(raw || '').replace(/\s+/g, ' ').trim();
+    if(!text) return { label: 'anonymous offering', href: '' };
+    const name = text.replace(/^@+/, '');
+    const isX = /^[A-Za-z0-9_]{1,15}$/.test(name);
+    const label = text.charAt(0) === '@' ? text : (isX ? '@' + name : text);
+    return { label: label.slice(0, 40), href: isX ? 'https://x.com/' + name : '' };
   }
   function setEmpty(msg){
     const emptyMsg = document.getElementById('galleryEmpty');
@@ -502,13 +486,12 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
   }
 
   function buildPin(row, eager){
-    const caption = captionFor(row);
-    const who = cleanName(row.submitter);
+    const info = handleInfo(row.submitter);
     memeById.set(row.id, {
       id: row.id,
       image_url: row.image_url,
-      submitter: who,
-      caption: caption,
+      submitter: info.href ? info.label : 'anon',
+      caption: info.label,
       votes: row.votes || 0,
       voted: hasVoted(row.id)
     });
@@ -517,10 +500,10 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
     const open = document.createElement('button');
     open.type = 'button';
     open.className = 'pin-open';
-    open.setAttribute('aria-label', 'view offering, ' + caption);
+    open.setAttribute('aria-label', 'view offering from ' + info.label);
     const img = document.createElement('img');
     img.src = row.image_url;
-    img.alt = caption;
+    img.alt = info.label;
     img.decoding = 'async';
     img.loading = eager ? 'eager' : 'lazy';
     if(eager) img.fetchPriority = 'high';
@@ -531,7 +514,16 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
     open.appendChild(img);
     open.addEventListener('click', () => openViewer(row.id));
     const cap = document.createElement('p');
-    cap.textContent = caption;
+    if(info.href){
+      const link = document.createElement('a');
+      link.href = info.href;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.textContent = info.label;
+      cap.appendChild(link);
+    }else{
+      cap.textContent = info.label;
+    }
     pin.append(open, cap);
     return pin;
   }
