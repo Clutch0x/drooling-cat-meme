@@ -50,27 +50,38 @@
     g.lineJoin = 'round';
     g.lineCap = 'round';
     g.strokeStyle = '#111';
-    g.lineWidth = lw || 8;
+    g.lineWidth = lw || 11;
     g.stroke();
   }
+  function rough(pts, amp){
+    return pts.map((p, i) => [
+      p[0] + Math.sin(i * 2.17 + p[1] * 0.03) * amp + ((i % 3) - 1) * amp * 0.35,
+      p[1] + Math.cos(i * 1.71 + p[0] * 0.02) * amp
+    ]);
+  }
   function poly(g, pts, fill, lw){
+    const j = rough(pts, 4.5);
     g.beginPath();
-    g.moveTo(pts[0][0], pts[0][1]);
-    for(let i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]);
+    g.moveTo(j[0][0], j[0][1]);
+    for(let i = 1; i < j.length; i++) g.lineTo(j[i][0], j[i][1]);
     g.closePath();
     g.fillStyle = fill;
     g.fill();
-    ink(g, lw);
+    ink(g, Math.max(lw || 12, 11));
   }
   function wob(pts, amp){
-    return pts.map((p, i) => [p[0] + Math.sin(i * 2.3 + p[1]) * amp, p[1] + Math.cos(i * 1.8) * amp]);
+    return rough(pts, amp);
   }
   function ellipse(g, x, y, rx, ry, fill, lw){
-    g.beginPath();
-    g.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
-    g.fillStyle = fill;
-    g.fill();
-    ink(g, lw);
+    const pts = [];
+    const n = 11;
+    for(let i = 0; i < n; i++){
+      const a = (i / n) * Math.PI * 2 - 0.2;
+      const jx = 1 + Math.sin(i * 2.4 + x * 0.01) * 0.09;
+      const jy = 1 + Math.cos(i * 1.8 + y * 0.01) * 0.09;
+      pts.push([x + Math.cos(a) * rx * jx, y + Math.sin(a) * ry * jy]);
+    }
+    poly(g, pts, fill, lw || 10);
   }
   function rose(g, x, y, r){
     g.save();
@@ -281,80 +292,84 @@
 
   function drawHat(g, cat){
     if(state.hat === 'none') return;
-    const ax = cat.x + cat.w * 0.43;
-    const ay = cat.y + cat.h * 0.105;
-    const s = cat.w / 560;
+    // y=0 is the ear line, about 11% down the cutout. Eyes sit near 22%. Nothing may cross below y=0.
+    const ax = cat.x + cat.w * 0.46;
+    const ay = cat.y + cat.h * 0.11;
+    const s = cat.w / 580;
     g.save();
     g.translate(ax, ay);
+    g.rotate(-0.05);
     g.scale(s, s);
     if(state.hat === 'halo'){
       g.beginPath();
-      g.ellipse(0, -6, 150, 36, 0, 0, Math.PI * 2);
-      g.lineWidth = 18;
+      g.ellipse(4, -34, 132, 26, -0.08, 0, Math.PI * 2);
+      g.lineWidth = 16;
       g.strokeStyle = '#ffe14a';
       g.stroke();
-      ink(g, 7);
+      ink(g, 8);
     }else if(state.hat === 'mitre'){
-      poly(g, [[0, -200], [100, 18], [-100, 18]], '#f7f1e4', 8);
-      g.strokeStyle = '#e1b000'; g.lineWidth = 12;
-      g.beginPath(); g.moveTo(0, -150); g.lineTo(0, -70); g.moveTo(-26, -110); g.lineTo(26, -110); g.stroke();
-      poly(g, [[-80, 4], [80, 4], [80, 20], [-80, 20]], '#c8361f', 6);
+      poly(g, [[4, -188], [78, -2], [-86, 0]], '#f7f1e4', 10);
+      g.strokeStyle = '#e1b000'; g.lineWidth = 11;
+      g.beginPath(); g.moveTo(2, -140); g.lineTo(-2, -64); g.moveTo(-22, -102); g.lineTo(24, -96); g.stroke();
+      poly(g, [[-70, -18], [74, -22], [70, -4], [-74, -2]], '#c8361f', 7);
     }else if(state.hat === 'roses'){
-      for(let i = 0; i < 6; i++) rose(g, -110 + i * 44, -8 + (i % 2) * 8, 24);
+      for(let i = 0; i < 5; i++) rose(g, -88 + i * 44, -30 + (i % 2) * 6, 18);
     }else if(state.hat === 'prop'){
-      poly(g, [[-100, 16], [100, 16], [90, -20], [-90, -20]], '#2f6bff', 7);
-      ellipse(g, 0, -50, 70, 46, '#ff3b30', 7);
-      g.strokeStyle = '#111'; g.lineWidth = 8;
-      g.beginPath(); g.moveTo(0, -90); g.lineTo(0, -130); g.stroke();
-      poly(g, [[-50, -130], [50, -130], [8, -118], [-8, -142]], '#ffe14a', 6);
+      poly(g, [[-92, -4], [96, 0], [84, -28], [-88, -22]], '#2f6bff', 9);
+      ellipse(g, 6, -62, 58, 36, '#ff3b30', 9);
+      g.strokeStyle = '#111'; g.lineWidth = 9;
+      g.beginPath(); g.moveTo(4, -96); g.lineTo(-2, -132); g.stroke();
+      poly(g, [[-46, -128], [50, -136], [6, -118], [-8, -146]], '#ffe14a', 8);
     }else if(state.hat === 'cone'){
-      poly(g, [[0, -210], [78, 20], [-78, 20]], '#ff6a00', 8);
-      poly(g, [[-48, -40], [48, -40], [36, -18], [-36, -18]], '#fff', 6);
+      poly(g, [[6, -176], [52, -2], [-58, 0]], '#ff6a00', 10);
+      poly(g, [[-36, -48], [32, -56], [24, -36], [-30, -30]], '#fff', 7);
     }else if(state.hat === 'foil'){
-      poly(g, wob([[0, -180], [90, 8], [30, 22], [-10, 6], [-40, 24], [-95, 4]], 3), '#d5dbe3', 7);
+      poly(g, [[2, -168], [78, -8], [28, -2], [-8, -16], [-36, -4], [-84, -10]], '#d5dbe3', 9);
       g.strokeStyle = '#fff'; g.lineWidth = 4;
-      g.beginPath(); g.moveTo(-40, -80); g.lineTo(20, -40); g.moveTo(10, -120); g.lineTo(40, -70); g.stroke();
+      g.beginPath(); g.moveTo(-30, -90); g.lineTo(18, -48); g.moveTo(8, -120); g.lineTo(36, -70); g.stroke();
     }else if(state.hat === 'chef'){
-      ellipse(g, 0, -110, 78, 70, '#fff', 8);
-      ellipse(g, -40, -70, 36, 30, '#fff', 7);
-      ellipse(g, 46, -64, 32, 28, '#fff', 7);
-      poly(g, [[-90, -10], [90, -10], [90, 18], [-90, 18]], '#fff', 7);
+      ellipse(g, -4, -108, 70, 58, '#fff', 10);
+      ellipse(g, -46, -78, 30, 24, '#fff', 8);
+      ellipse(g, 42, -72, 28, 22, '#fff', 8);
+      poly(g, [[-82, -22], [86, -28], [80, -2], [-78, 0]], '#fff', 9);
     }else if(state.hat === 'crown'){
-      poly(g, [[-100, 16], [-78, -80], [-30, -10], [0, -120], [30, -10], [78, -80], [100, 16]], '#ffe14a', 8);
-      ellipse(g, -78, -80, 10, 10, '#ff3b30', 4);
-      ellipse(g, 0, -120, 10, 10, '#2f6bff', 4);
-      ellipse(g, 78, -80, 10, 10, '#22c55e', 4);
+      poly(g, [[-92, -2], [-70, -78], [-28, -16], [4, -112], [34, -12], [74, -84], [96, 0]], '#ffe14a', 10);
+      ellipse(g, -70, -78, 9, 9, '#ff3b30', 5);
+      ellipse(g, 4, -112, 9, 9, '#2f6bff', 5);
+      ellipse(g, 74, -84, 9, 9, '#22c55e', 5);
     }else if(state.hat === 'cowboy'){
-      ellipse(g, 0, 6, 170, 22, '#8a5a32', 7);
-      poly(g, [[-70, -4], [-60, -80], [60, -80], [70, -4]], '#a56b3c', 7);
-      ellipse(g, 0, -80, 62, 22, '#c48a55', 6);
+      ellipse(g, 0, -20, 150, 16, '#8a5a32', 9);
+      poly(g, [[-62, -24], [-54, -92], [58, -98], [66, -20]], '#a56b3c', 9);
+      ellipse(g, 2, -96, 54, 16, '#c48a55', 7);
     }else if(state.hat === 'beanie'){
-      ellipse(g, 0, -40, 100, 70, '#2f6bff', 8);
-      g.fillStyle = '#163a8a';
-      for(let i = -3; i <= 3; i++) g.fillRect(i * 22 - 6, -70, 10, 60);
-      ellipse(g, 70, -90, 18, 18, '#ffe14a', 6);
-      poly(g, [[-100, 0], [100, 0], [100, 18], [-100, 18]], '#f4efe4', 6);
+      ellipse(g, 2, -58, 86, 48, '#2f6bff', 10);
+      g.strokeStyle = '#163a8a'; g.lineWidth = 8;
+      for(let i = -3; i <= 3; i++){
+        g.beginPath(); g.moveTo(i * 20 - 4, -78); g.lineTo(i * 18, -16); g.stroke();
+      }
+      ellipse(g, 62, -96, 16, 16, '#ffe14a', 7);
+      poly(g, [[-88, -16], [90, -20], [86, -2], [-84, 0]], '#f4efe4', 8);
     }else if(state.hat === 'viking'){
-      ellipse(g, 0, -30, 90, 60, '#b9b9b9', 8);
-      poly(g, [[-70, -20], [-150, -110], [-90, -20]], '#f4efe4', 7);
-      poly(g, [[70, -20], [150, -110], [90, -20]], '#f4efe4', 7);
-      poly(g, [[-96, 8], [96, 8], [96, 22], [-96, 22]], '#ff3b30', 6);
+      ellipse(g, 2, -52, 78, 40, '#c2c2c2', 10);
+      poly(g, [[-58, -40], [-138, -128], [-78, -36]], '#f4efe4', 8);
+      poly(g, [[62, -44], [142, -118], [80, -30]], '#f4efe4', 8);
+      poly(g, [[-84, -16], [88, -20], [82, -2], [-78, 0]], '#ff3b30', 8);
     }else if(state.hat === 'durag'){
-      poly(g, [[-120, 42], [-100, 4], [110, 8], [120, 46]], '#ff3b30', 8);
-      poly(g, [[-90, 20], [-180, -50], [-156, -64], [-70, 16]], '#ff3b30', 7);
-      ellipse(g, -170, -58, 16, 16, '#ff3b30', 6);
+      poly(g, [[-108, -2], [-96, -36], [104, -28], [112, 0]], '#ff3b30', 10);
+      poly(g, [[-88, -20], [-168, -78], [-146, -90], [-70, -16]], '#ff3b30', 8);
+      ellipse(g, -158, -84, 14, 14, '#ff3b30', 7);
     }else if(state.hat === 'fish'){
-      ellipse(g, 10, -16, 110, 36, '#ff8a00', 8);
-      poly(g, [[110, -16], [160, -50], [160, 16]], '#ff5a00', 7);
-      ellipse(g, -40, -24, 8, 8, '#111', 3);
+      ellipse(g, 8, -30, 96, 24, '#ff8a00', 9);
+      poly(g, [[96, -30], [142, -58], [138, -8]], '#ff5a00', 8);
+      ellipse(g, -36, -36, 7, 7, '#111', 4);
     }else if(state.hat === 'party'){
-      poly(g, [[0, -200], [80, 18], [-74, 18]], '#2f6bff', 8);
-      poly(g, [[-20, -140], [36, -40], [8, -30], [-36, -120]], '#ffe14a', 6);
-      ellipse(g, 0, -210, 16, 16, '#ff3b30', 6);
+      poly(g, [[4, -186], [64, -2], [-58, 0]], '#2f6bff', 10);
+      poly(g, [[-16, -130], [28, -48], [6, -40], [-28, -112]], '#ffe14a', 7);
+      ellipse(g, 2, -198, 14, 14, '#ff3b30', 7);
     }else if(state.hat === 'sombrero'){
-      ellipse(g, 0, 8, 200, 26, '#ffe14a', 8);
-      ellipse(g, 0, -40, 70, 50, '#ffb000', 8);
-      poly(g, [[-40, -10], [40, -10], [30, 10], [-30, 10]], '#ff3b30', 6);
+      ellipse(g, 2, -18, 168, 16, '#ffe14a', 10);
+      ellipse(g, 0, -58, 58, 36, '#ffb000', 9);
+      poly(g, [[-34, -28], [36, -34], [28, -12], [-30, -8]], '#ff3b30', 7);
     }
     g.restore();
   }
@@ -422,51 +437,53 @@
 
   function drawAcc(g, cat){
     if(state.acc === 'none') return;
-    const cx = cat.x + cat.w * 0.46;
-    const y = cat.y + cat.h * 0.50;
-    const w = cat.w * 0.42;
+    // Chin is just above the drool. The blue streak itself runs x 0.43-0.48, y 0.37-0.47, so pieces stay above that and off the stripe.
+    const cx = cat.x + cat.w * 0.452;
+    const y = cat.y + cat.h * 0.318;
+    const L = cx - cat.w * 0.09;
+    const R = cx + cat.w * 0.09;
     g.save();
     if(state.acc === 'chain'){
-      g.fillStyle = '#ffe14a';
-      for(let i = 0; i < 7; i++){
-        const px = cx - w / 2 + i * (w / 6);
-        const py = y + Math.abs(i - 3) * 10;
-        ellipse(g, px, py, 16, 12, '#ffe14a', 5);
+      for(let i = 0; i < 4; i++){
+        ellipse(g, L - 8 - i * 15, y + 2 + (i % 2) * 3, 8, 6, '#ffe14a', 5);
+        ellipse(g, R + 8 + i * 15, y + 1 + (i % 2) * 4, 8, 6, '#ffe14a', 5);
       }
     }else if(state.acc === 'bandana'){
-      poly(g, [[cx - w / 2, y], [cx + w / 2, y - 8], [cx + w / 2 - 10, y + 36], [cx - w / 2 + 8, y + 40]], '#ff3b30', 7);
-      poly(g, [[cx, y + 30], [cx - 28, y + 80], [cx + 8, y + 36]], '#ff3b30', 6);
+      poly(g, [[L - 52, y - 2], [L, y + 4], [L - 6, y + 16], [L - 48, y + 10]], '#ff3b30', 8);
+      poly(g, [[R, y + 2], [R + 56, y - 6], [R + 48, y + 12], [R + 4, y + 16]], '#ff3b30', 8);
+      poly(g, [[L - 46, y + 8], [L - 70, y + 36], [L - 40, y + 16]], '#ff5a36', 7);
     }else if(state.acc === 'bowtie'){
-      poly(g, [[cx, y + 10], [cx - 70, y - 24], [cx - 70, y + 44]], '#2f6bff', 7);
-      poly(g, [[cx, y + 10], [cx + 70, y - 24], [cx + 70, y + 44]], '#2f6bff', 7);
-      ellipse(g, cx, y + 10, 14, 14, '#ffe14a', 5);
+      poly(g, [[L, y + 2], [L - 36, y - 12], [L - 32, y + 16]], '#2f6bff', 8);
+      poly(g, [[R, y + 4], [R + 38, y - 8], [R + 30, y + 18]], '#2f6bff', 8);
+      ellipse(g, L + 2, y + 2, 6, 6, '#ffe14a', 5);
     }else if(state.acc === 'rosary'){
-      g.fillStyle = '#f4efe4';
-      for(let i = 0; i < 8; i++){
-        ellipse(g, cx - 80 + i * 22, y + (i < 4 ? i * 8 : (7 - i) * 8), 8, 8, i === 3 ? '#ff3b30' : '#f7f1e4', 4);
-      }
-      poly(g, [[cx - 10, y + 28], [cx + 8, y + 70], [cx + 22, y + 28]], '#ffe14a', 5);
+      for(let i = 0; i < 5; i++) ellipse(g, L - 46 + i * 11, y + i * 3, 5, 5, '#f7f1e4', 4);
+      poly(g, [[L - 50, y + 16], [L - 40, y + 40], [L - 28, y + 16]], '#ffe14a', 6);
     }else if(state.acc === 'bib'){
-      poly(g, [[cx - 70, y], [cx + 70, y], [cx + 80, y + 150], [cx - 80, y + 150]], '#fff', 8);
-      ellipse(g, cx, y + 70, 16, 16, '#2f6bff', 5);
+      poly(g, [[L - 8, y + 6], [L - 36, y + 2], [L - 42, y + 28], [L - 18, y + 46], [L - 4, y + 22]], '#fff6ea', 8);
+      ellipse(g, L - 24, y + 22, 5, 5, '#2f6bff', 5);
+      g.strokeStyle = '#111'; g.lineWidth = 6;
+      g.beginPath(); g.moveTo(L - 10, y + 4); g.quadraticCurveTo(cx, y - 10, R + 8, y + 6); g.stroke();
     }else if(state.acc === 'scarf'){
-      poly(g, [[cx - w / 2, y - 6], [cx + w / 2, y], [cx + w / 2 - 16, y + 28], [cx - w / 2 + 10, y + 24]], '#ff8a00', 7);
-      poly(g, [[cx - 36, y + 16], [cx - 8, y + 16], [cx - 16, y + 130], [cx - 48, y + 120]], '#ff5a00', 7);
-      poly(g, [[cx + 8, y + 14], [cx + 36, y + 14], [cx + 46, y + 120], [cx + 12, y + 128]], '#ff8a00', 7);
+      poly(g, [[L - 40, y], [L, y + 6], [L - 4, y + 16], [L - 36, y + 8]], '#ff8a00', 8);
+      poly(g, [[R, y + 2], [R + 44, y - 4], [R + 36, y + 14], [R + 2, y + 16]], '#ff8a00', 8);
+      poly(g, [[R + 18, y + 12], [R + 32, y + 10], [R + 26, y + 58], [R + 10, y + 54]], '#ff5a00', 7);
     }else if(state.acc === 'pearls'){
-      for(let i = 0; i < 8; i++){
-        ellipse(g, cx - 90 + i * 26, y + Math.sin(i) * 6, 12, 12, '#fff', 4);
+      for(let i = 0; i < 4; i++){
+        ellipse(g, L - 6 - i * 12, y + (i % 2) * 3, 6, 6, '#fff', 4);
+        ellipse(g, R + 6 + i * 12, y + (i % 2) * 3, 6, 6, '#fff', 4);
       }
     }else if(state.acc === 'medal'){
-      g.strokeStyle = '#ff3b30'; g.lineWidth = 8;
-      g.beginPath(); g.moveTo(cx - 40, y - 10); g.lineTo(cx, y + 30); g.lineTo(cx + 40, y - 10); g.stroke();
-      ellipse(g, cx, y + 58, 28, 28, '#ffe14a', 6);
+      g.strokeStyle = '#ff3b30'; g.lineWidth = 6;
+      g.beginPath(); g.moveTo(L - 20, y); g.lineTo(L, y + 8); g.moveTo(R + 24, y - 2); g.lineTo(R, y + 8); g.stroke();
+      ellipse(g, R + 28, y + 24, 12, 12, '#ffe14a', 6);
     }else if(state.acc === 'collar'){
-      poly(g, [[cx - 90, y], [cx + 90, y + 4], [cx + 80, y + 28], [cx - 80, y + 24]], '#c8361f', 7);
-      ellipse(g, cx, y + 16, 10, 10, '#ffe14a', 4);
+      poly(g, [[L - 46, y + 2], [L, y + 8], [L - 4, y + 16], [L - 42, y + 8]], '#c8361f', 8);
+      poly(g, [[R, y + 6], [R + 48, y], [R + 40, y + 14], [R + 2, y + 16]], '#c8361f', 8);
+      ellipse(g, R + 8, y + 6, 5, 5, '#ffe14a', 4);
     }else if(state.acc === 'tie'){
-      poly(g, [[cx - 16, y], [cx + 16, y], [cx + 8, y + 36], [cx - 8, y + 36]], '#111', 5);
-      poly(g, [[cx - 22, y + 34], [cx + 22, y + 34], [cx + 6, y + 130], [cx - 6, y + 130]], '#2f6bff', 7);
+      poly(g, [[R, y], [R + 16, y - 2], [R + 18, y + 14], [R + 2, y + 12]], '#111', 6);
+      poly(g, [[R + 2, y + 12], [R + 20, y + 10], [R + 14, y + 58], [R, y + 52]], '#2f6bff', 8);
     }
     g.restore();
   }
