@@ -56,6 +56,10 @@ button,input{font:inherit;color:inherit}
 .rays{position:absolute;inset:-60px;overflow:hidden;background:repeating-conic-gradient(from 0deg,rgba(244,196,48,.28) 0 6deg,transparent 6deg 16deg);border-radius:50%;-webkit-mask:radial-gradient(circle,#000 30%,transparent 70%);mask:radial-gradient(circle,#000 30%,transparent 70%);z-index:0}
 .polaroid{position:relative;z-index:2;background:#fbf8f1;padding:16px 16px 70px;box-shadow:0 18px 40px rgba(0,0,0,.4);transform:rotate(3deg)}
 .polaroid img{display:block;width:100%;height:auto}
+.tally{position:relative;z-index:6;margin:14px 0 0 6px;width:max-content;max-width:calc(100% - 8px);background:#fbf8f1;border:2px solid var(--ink);box-shadow:5px 6px 0 var(--blue);padding:8px 14px 10px;transform:rotate(-1.5deg)}
+.tally[hidden]{display:none !important}
+.tally-line{font-family:Caveat,cursive;font-size:30px;line-height:1.05}
+.tally-line b{font-family:'Bowlby One',sans-serif;font-weight:400;font-size:22px;color:var(--blue)}
 .polaroid .cap{position:absolute;bottom:16px;left:0;right:0;text-align:center;font-family:'Permanent Marker';font-size:30px}
 .tape{position:absolute;width:140px;height:38px;background:rgba(240,230,170,.75);box-shadow:0 1px 3px rgba(0,0,0,.2);z-index:3;clip-path:polygon(3% 0,97% 4%,100% 50%,96% 100%,2% 96%,0 50%)}
 .t1{left:50%;top:-20px;transform:translateX(-50%) rotate(-3deg);height:34px;width:150px}.t2{display:none}
@@ -164,6 +168,7 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
  .join a{font-size:20px}
  .witness-grid{grid-template-columns:1fr}
  .polaroid .cap{font-size:24px}
+ .tally{margin-top:12px}.tally-line{font-size:26px}.tally-line b{font-size:18px}
  .chart-frame{height:220px}
 }
 @media (prefers-reduced-motion: reduce){
@@ -202,10 +207,13 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
     <div class="polaroid">
       <span class="tape t1"></span>
       <span class="tape t2"></span>
-      <img src="assets/drooling-cat.jpg" alt="the drooling cat" width="1100" height="1020" fetchpriority="high">
+      <img id="relicImg" src="assets/drooling-cat.jpg" alt="the drooling cat" width="1100" height="1020" fetchpriority="high">
       <div class="cap">our lord of guh</div>
     </div>
     <div class="seal"><div>ORIGINAL<br>RELIC<small>feb 20 · 2026</small></div></div>
+    <div class="tally" id="visitorTally" hidden>
+      <p class="tally-line">visitors: <b id="visitorCount">0</b></p>
+    </div>
   </div>
 </header>
 
@@ -810,6 +818,44 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
       io.observe(document.getElementById('sentinel'));
     }
     if(location.hash === '#submit') openSubmit();
+  }
+
+  initVisitors();
+
+  function fmtCount(n){
+    const value = Number(n);
+    if(!Number.isFinite(value)) return '0';
+    return Math.max(0, Math.floor(value)).toLocaleString('en-US');
+  }
+
+  function initVisitors(){
+    const tally = document.getElementById('visitorTally');
+    const countEl = document.getElementById('visitorCount');
+    if(!tally || !countEl || !sbClient) return;
+    const sessionKey = 'droolingcat_visit';
+    let counted = false;
+    try{ counted = sessionStorage.getItem(sessionKey) === '1'; }
+    catch(e){ counted = false; }
+    function show(total){
+      const value = Number(total);
+      if(!Number.isFinite(value)) return;
+      countEl.textContent = fmtCount(value);
+      tally.hidden = false;
+    }
+    async function readTotal(){
+      const { data, error } = await sbClient.from('visitor_counter').select('total').eq('id', 1).maybeSingle();
+      if(error || !data) return;
+      show(data.total);
+    }
+    async function countOnce(){
+      const { data, error } = await sbClient.rpc('count_visit');
+      if(error) return;
+      try{ sessionStorage.setItem(sessionKey, '1'); }
+      catch(e){}
+      show(data);
+    }
+    if(counted) readTotal();
+    else countOnce();
   }
 })();
 </script>
