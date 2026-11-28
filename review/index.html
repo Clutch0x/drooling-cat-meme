@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>the vestry</title>
+<meta name="theme-color" content="#2a2520">
+<link rel="icon" href="../assets/drooling-cat.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Special+Elite&family=Caveat:wght@700&family=Bowlby+One&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#2b4dff;--paper:#efe4cf;--ink:#1d1a16;--red:#c8361f}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Special Elite',monospace;color:var(--ink);background:#2a2520;background-image:radial-gradient(circle at 20% 10%,rgba(255,180,90,.18),transparent 40%)}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+.page{max-width:860px;margin:0 auto;padding:16px 14px 48px}
+.sheet{background:var(--paper);background-image:linear-gradient(rgba(0,0,0,.035) 1px,transparent 1px);background-size:100% 30px;box-shadow:0 24px 50px rgba(0,0,0,.45);padding:22px 16px 36px}
+h1{font-family:UnifrakturMaguntia,serif;font-weight:400;font-size:clamp(46px,12vw,78px);line-height:.9}
+h2{font-family:Caveat,cursive;color:var(--red);font-size:34px;font-weight:700;margin:22px 0 10px}
+p{line-height:1.45}
+.lede{margin:8px 0 16px;font-size:16px}
+label{display:block;font-family:Caveat,cursive;font-size:26px;color:var(--red);margin-bottom:6px}
+input[type="email"]{width:100%;min-height:48px;font-size:16px;padding:10px 12px;border:2px solid var(--ink);background:#fbf8f1}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.btn{min-height:48px;padding:10px 14px;border:2px solid var(--ink);background:#fbf8f1;cursor:pointer;font-family:'Bowlby One',sans-serif;text-transform:uppercase;font-size:14px}
+.btn.blue{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn.red{background:var(--red);color:#fff;border-color:var(--red)}
+.btn:disabled{opacity:.55;cursor:default}
+.status{min-height:1.3em;margin-top:10px;font-family:Caveat,cursive;font-size:24px;color:var(--red)}
+.card{background:#fbf8f1;border:2px solid var(--ink);padding:10px;margin:0 0 18px}
+.card img{width:100%;max-height:72vh;object-fit:contain;background:#1d1a16;display:block}
+.meta{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin:8px 2px;font-family:Caveat,cursive;font-size:26px}
+.meta small{font-family:'Special Elite',monospace;font-size:13px}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.actions .btn{flex:1 1 140px}
+.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:8px}
+.who{font-size:14px}
+.empty{font-family:Caveat,cursive;font-size:26px;color:var(--ink)}
+[hidden]{display:none !important}
+</style>
+</head>
+<body>
+<div class="page"><div class="sheet">
+  <div class="top">
+    <h1>the vestry</h1>
+    <button type="button" class="btn" id="signOut" hidden>sign out</button>
+  </div>
+  <p class="lede">offerings wait here until you let them on the wall. this page is not linked from the church.</p>
+  <p class="who" id="who" hidden></p>
+
+  <form id="gate">
+    <label for="email">your email</label>
+    <input id="email" type="email" inputmode="email" autocomplete="email" required placeholder="the keeper's inbox">
+    <div class="row"><button class="btn blue" type="submit" id="sendLink">send the link</button></div>
+  </form>
+  <p class="status" id="status" role="status"></p>
+
+  <div id="queue" hidden>
+    <h2>waiting</h2>
+    <div id="pending"></div>
+    <h2>on the wall</h2>
+    <div id="approved"></div>
+  </div>
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  const SUPABASE_URL = 'https://jgpolvnqzuvtwahecrcn.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_x-YausLydZP3oCRralx74A_pI_GExEq';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const statusEl = document.getElementById('status');
+  const gate = document.getElementById('gate');
+  const queue = document.getElementById('queue');
+  const signOutBtn = document.getElementById('signOut');
+  const whoEl = document.getElementById('who');
+
+  function setStatus(text){ statusEl.textContent = text || ''; }
+  function handleOf(row){
+    const text = String(row.submitter || '').replace(/\s+/g, ' ').trim();
+    return text || 'anonymous offering';
+  }
+  function whenOf(row){
+    const d = row.created_at ? new Date(row.created_at) : null;
+    if(!d || Number.isNaN(d.getTime())) return '';
+    return d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+  }
+  function storagePath(url){
+    const marker = '/object/public/memes/';
+    const i = String(url || '').indexOf(marker);
+    if(i < 0) return null;
+    return decodeURIComponent(String(url).slice(i + marker.length).split('?')[0]);
+  }
+
+  function card(row, mode){
+    const article = document.createElement('article');
+    article.className = 'card';
+    article.dataset.id = String(row.id);
+    const img = document.createElement('img');
+    img.src = row.image_url;
+    img.alt = 'submission from ' + handleOf(row);
+    const meta = document.createElement('div');
+    meta.className = 'meta';
+    const who = document.createElement('b');
+    who.textContent = handleOf(row);
+    const when = document.createElement('small');
+    when.textContent = whenOf(row);
+    meta.append(who, when);
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+    if(mode === 'pending'){
+      const approve = document.createElement('button');
+      approve.type = 'button';
+      approve.className = 'btn blue';
+      approve.textContent = 'approve';
+      approve.addEventListener('click', () => setApproved(row, true, approve));
+      actions.appendChild(approve);
+    }else{
+      const unapprove = document.createElement('button');
+      unapprove.type = 'button';
+      unapprove.className = 'btn';
+      unapprove.textContent = 'unapprove';
+      unapprove.addEventListener('click', () => setApproved(row, false, unapprove));
+      actions.appendChild(unapprove);
+    }
+    const del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'btn red';
+    del.textContent = 'delete';
+    del.addEventListener('click', () => removeRow(row, del));
+    actions.appendChild(del);
+    article.append(img, meta, actions);
+    return article;
+  }
+
+  function fill(id, rows, mode){
+    const box = document.getElementById(id);
+    box.textContent = '';
+    if(!rows.length){
+      const p = document.createElement('p');
+      p.className = 'empty';
+      p.textContent = mode === 'pending' ? 'nothing waiting.' : 'the wall is empty.';
+      box.appendChild(p);
+      return;
+    }
+    rows.forEach((row) => box.appendChild(card(row, mode)));
+  }
+
+  async function loadQueues(){
+    setStatus('fetching the pile…');
+    const pending = await sb.from('memes').select('*').eq('approved', false).order('created_at', { ascending: false });
+    const approved = await sb.from('memes').select('*').eq('approved', true).order('created_at', { ascending: false });
+    if(pending.error || approved.error){
+      setStatus('could not read the pile. the policies may not be in place yet.');
+      console.error(pending.error || approved.error);
+      return;
+    }
+    fill('pending', pending.data || [], 'pending');
+    fill('approved', approved.data || [], 'approved');
+    setStatus('');
+  }
+
+  async function setApproved(row, approved, btn){
+    btn.disabled = true;
+    const { error } = await sb.from('memes').update({ approved: approved }).eq('id', row.id);
+    if(error){
+      setStatus(approved ? 'approve failed.' : 'unapprove failed.');
+      console.error(error);
+      btn.disabled = false;
+      return;
+    }
+    await loadQueues();
+  }
+
+  async function removeRow(row, btn){
+    const label = handleOf(row);
+    if(!window.confirm('delete the offering from ' + label + '? this cannot be undone.')) return;
+    btn.disabled = true;
+    const path = storagePath(row.image_url);
+    if(path){
+      const removed = await sb.storage.from('memes').remove([path]);
+      if(removed.error) console.error(removed.error);
+    }
+    const { error } = await sb.from('memes').delete().eq('id', row.id);
+    if(error){
+      setStatus('delete failed.');
+      console.error(error);
+      btn.disabled = false;
+      return;
+    }
+    await loadQueues();
+  }
+
+  async function enter(){
+    const { data } = await sb.auth.getSession();
+    const session = data && data.session;
+    if(!session){
+      gate.hidden = false;
+      queue.hidden = true;
+      signOutBtn.hidden = true;
+      whoEl.hidden = true;
+      return;
+    }
+    const email = session.user && session.user.email;
+    const check = await sb.rpc('is_moderator');
+    if(check.error || !check.data){
+      gate.hidden = true;
+      queue.hidden = true;
+      signOutBtn.hidden = false;
+      whoEl.hidden = false;
+      whoEl.textContent = email || '';
+      setStatus('this inbox cannot moderate. only the keeper can.');
+      return;
+    }
+    gate.hidden = true;
+    queue.hidden = false;
+    signOutBtn.hidden = false;
+    whoEl.hidden = false;
+    whoEl.textContent = email || '';
+    await loadQueues();
+  }
+
+  document.getElementById('gate').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const btn = document.getElementById('sendLink');
+    btn.disabled = true;
+    setStatus('sending the link…');
+    const { error } = await sb.auth.signInWithOtp({
+      email: email,
+      options: { emailRedirectTo: location.origin + '/review/' }
+    });
+    btn.disabled = false;
+    if(error){
+      setStatus('the link did not send. email sign-in may still be off in supabase.');
+      console.error(error);
+      return;
+    }
+    setStatus('check that inbox. open the link on this phone.');
+  });
+
+  signOutBtn.addEventListener('click', async () => {
+    await sb.auth.signOut();
+    setStatus('');
+    enter();
+  });
+
+  sb.auth.onAuthStateChange(() => { enter(); });
+  enter();
+})();
+</script>
+</body>
+</html>

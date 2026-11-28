@@ -70,10 +70,12 @@ h2 small{display:block;font-family:Caveat,cursive;font-size:34px;color:var(--red
 .wallhead{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:70px 0 26px;flex-wrap:wrap}
 .wallhead .count{font-family:Caveat,cursive;font-size:28px;color:var(--red);margin-top:6px}
 .board{display:grid;grid-template-columns:repeat(4,1fr);gap:34px 28px;padding:10px}
-.pin{position:relative;background:#fbf8f1;padding:10px 10px 46px;box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.pin{position:relative;background:#fbf8f1;padding:10px 10px 54px;box-shadow:0 10px 24px rgba(0,0,0,.25)}
 .pin:nth-child(odd){transform:rotate(-2.5deg)}.pin:nth-child(3n){transform:rotate(2deg)}.pin:nth-child(4n){transform:rotate(-1deg) translateY(14px)}
 .pin img{display:block;width:100%;aspect-ratio:1;object-fit:cover;background:#ddd2bc}
-.pin p{position:absolute;bottom:10px;left:10px;right:10px;font-family:Caveat,cursive;font-size:24px;line-height:1}
+.pin p{position:absolute;bottom:12px;left:10px;right:78px;font-family:Caveat,cursive;font-size:24px;line-height:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pin-vote{position:absolute;z-index:3;right:8px;bottom:6px;border:0;background:transparent;color:var(--red);font-family:Caveat,cursive;font-size:22px;line-height:1;cursor:pointer;min-height:40px;min-width:44px;padding:4px}
+.pin-vote.voted{color:var(--blue);cursor:default}
 .pin-open{display:block;width:100%;padding:0;border:0;background:transparent;cursor:pointer;text-align:left}
 .pin:before{content:"";position:absolute;top:-12px;left:50%;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--red) 40%,#6b1408);box-shadow:2px 4px 4px rgba(0,0,0,.35);z-index:2;pointer-events:none}
 .pin:nth-child(3n+1):before{background:radial-gradient(circle at 35% 30%,#fff,var(--blue) 40%,#0b1a6b)}
@@ -155,7 +157,7 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
  .seal{width:96px;height:96px;font-size:10px;right:-14px;bottom:-66px}.rays{inset:-20px}.halo{top:-60px;height:70px}.scrawl{display:none}
  .frak{font-size:66px}.cutout{font-size:20px}.cutout b:nth-child(4){font-size:26px}
  .sermon{font-size:17px}.stampbtn{font-size:20px;padding:18px 20px}
- .board{grid-template-columns:1fr 1fr;gap:26px 16px}.pin p{font-size:19px}
+ .board{grid-template-columns:1fr 1fr;gap:26px 16px}.pin p{font-size:19px;right:62px}.pin-vote{font-size:18px;right:4px}
  h2{font-size:56px}.lore{grid-template-columns:1fr}
  .c1{left:-30px}.c2{left:-4px}
  .t1,.t2{width:100px}
@@ -470,15 +472,30 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
     const previous = meme.votes || 0;
     meme.voted = true;
     meme.votes = previous + 1;
+    const pin = document.querySelector('.pin[data-id="'+ memeId +'"]');
+    if(pin) pin.dataset.votes = String(meme.votes);
     paintVote(memeId);
-    saveVotedId(memeId);
+    resortBoard();
     const { error } = await sbClient.rpc('upvote_meme', { meme_id: memeId });
+    if(!error) saveVotedId(memeId);
     if(error){
       console.error(error);
       meme.voted = false;
       meme.votes = previous;
+      if(pin) pin.dataset.votes = String(previous);
       paintVote(memeId);
+      resortBoard();
     }
+  }
+  function resortBoard(){
+    const board = document.getElementById('liveGallery');
+    const pins = [...board.querySelectorAll('.pin')];
+    pins.sort((a, b) => {
+      const byVotes = Number(b.dataset.votes || 0) - Number(a.dataset.votes || 0);
+      if(byVotes) return byVotes;
+      return String(b.dataset.created || '').localeCompare(String(a.dataset.created || ''));
+    });
+    pins.forEach((pin) => board.appendChild(pin));
   }
   function clearSkel(){
     const splash = document.getElementById('loadingSplash');
@@ -497,6 +514,9 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
     });
     const pin = document.createElement('article');
     pin.className = 'pin';
+    pin.dataset.id = String(row.id);
+    pin.dataset.votes = String(row.votes || 0);
+    pin.dataset.created = row.created_at || '';
     const open = document.createElement('button');
     open.type = 'button';
     open.className = 'pin-open';
@@ -524,7 +544,20 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
     }else{
       cap.textContent = info.label;
     }
-    pin.append(open, cap);
+    const vote = document.createElement('button');
+    vote.type = 'button';
+    vote.className = 'pin-vote';
+    vote.dataset.vote = String(row.id);
+    vote.setAttribute('aria-label', 'upvote this offering');
+    const count = document.createElement('span');
+    count.textContent = String(row.votes || 0);
+    vote.append(document.createTextNode('▲ '), count);
+    if(hasVoted(row.id)){
+      vote.classList.add('voted');
+      vote.disabled = true;
+    }
+    vote.addEventListener('click', () => handleUpvote(row.id));
+    pin.append(open, cap, vote);
     return pin;
   }
 
@@ -541,8 +574,8 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
     const first = galleryOffset === 0;
     const query = sbClient.from('memes').select('*', first ? { count: 'exact' } : undefined)
       .eq('approved', true)
+      .order('votes', { ascending: false, nullsFirst: false })
       .order('created_at', { ascending: false })
-      .order('id', { ascending: false })
       .range(galleryOffset, galleryOffset + PAGE_SIZE - 1);
     const { data, error, count } = await query;
     if(error){
@@ -571,6 +604,7 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
     }
     emptyMsg.hidden = true;
     rows.forEach((row, index) => board.appendChild(buildPin(row, first && index < 4)));
+    resortBoard();
     galleryOffset += rows.length;
     galleryDone = rows.length < PAGE_SIZE;
     loadBtn.hidden = galleryDone;
