@@ -14,10 +14,6 @@
 <meta name="twitter:description" content="the true story of drooling cat, straight from the timeline. buy $DROOLING on Solana.">
 <meta name="twitter:image" content="og-image.jpg">
 <meta name="theme-color" content="#2a2520">
-<script>
-  // Relic counter. Keep one: 'drool' (tap the cat) or 'visitor' (all-time visits).
-  window.COUNTER_MODE = 'drool';
-</script>
 <link rel="icon" href="assets/drooling-cat.jpg">
 <link rel="apple-touch-icon" href="assets/drooling-cat.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,18 +56,9 @@ button,input{font:inherit;color:inherit}
 .rays{position:absolute;inset:-60px;overflow:hidden;background:repeating-conic-gradient(from 0deg,rgba(244,196,48,.28) 0 6deg,transparent 6deg 16deg);border-radius:50%;-webkit-mask:radial-gradient(circle,#000 30%,transparent 70%);mask:radial-gradient(circle,#000 30%,transparent 70%);z-index:0}
 .polaroid{position:relative;z-index:2;background:#fbf8f1;padding:16px 16px 70px;box-shadow:0 18px 40px rgba(0,0,0,.4);transform:rotate(3deg)}
 .polaroid img{display:block;width:100%;height:auto}
-.relic-frame{position:relative}
-.drool-hit{display:block;width:100%;margin:0;padding:0;border:0;background:transparent;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
-.drool-hit:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-.drool-squish{display:block;transform-origin:52% 42%}
-.drool-fx{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:3}
-.drool-drop{position:absolute;width:16px;height:24px;border-radius:50% 50% 50% 50%/35% 35% 65% 65%;background:var(--blue)}
-.drool-plus{position:absolute;font-family:Caveat,cursive;font-size:34px;line-height:1;color:var(--red);white-space:nowrap}
 .tally{position:relative;z-index:6;margin:14px 0 0 6px;width:max-content;max-width:calc(100% - 8px);background:#fbf8f1;border:2px solid var(--ink);box-shadow:5px 6px 0 var(--blue);padding:8px 14px 10px;transform:rotate(-1.5deg)}
 .tally[hidden]{display:none !important}
-.tally-hint{font-family:'Special Elite',monospace;font-size:13px;letter-spacing:.03em}
 .tally-line{font-family:Caveat,cursive;font-size:30px;line-height:1.05}
-.tally-line[hidden]{display:none !important}
 .tally-line b{font-family:'Bowlby One',sans-serif;font-weight:400;font-size:22px;color:var(--blue)}
 .polaroid .cap{position:absolute;bottom:16px;left:0;right:0;text-align:center;font-family:'Permanent Marker';font-size:30px}
 .tape{position:absolute;width:140px;height:38px;background:rgba(240,230,170,.75);box-shadow:0 1px 3px rgba(0,0,0,.2);z-index:3;clip-path:polygon(3% 0,97% 4%,100% 50%,96% 100%,2% 96%,0 50%)}
@@ -220,18 +207,10 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
     <div class="polaroid">
       <span class="tape t1"></span>
       <span class="tape t2"></span>
-      <div class="relic-frame" id="relicFrame">
-        <img id="relicImg" src="assets/drooling-cat.jpg" alt="the drooling cat" width="1100" height="1020" fetchpriority="high">
-        <div class="drool-fx" id="droolFx" aria-hidden="true"></div>
-      </div>
+      <img id="relicImg" src="assets/drooling-cat.jpg" alt="the drooling cat" width="1100" height="1020" fetchpriority="high">
       <div class="cap">our lord of guh</div>
     </div>
     <div class="seal"><div>ORIGINAL<br>RELIC<small>feb 20 · 2026</small></div></div>
-    <div class="tally" id="droolTally" hidden>
-      <p class="tally-hint">tap the cat</p>
-      <p class="tally-line">you <b id="droolMine">0</b></p>
-      <p class="tally-line" id="droolFlockLine" hidden>the flock <b id="droolFlock">0</b></p>
-    </div>
     <div class="tally" id="visitorTally" hidden>
       <p class="tally-line">visitors: <b id="visitorCount">0</b></p>
     </div>
@@ -841,206 +820,12 @@ dialog::backdrop{background:rgba(20,16,12,.72)}
     if(location.hash === '#submit') openSubmit();
   }
 
-  initRelicCounter();
-
-  function initRelicCounter(){
-    const mode = window.COUNTER_MODE;
-    if(mode === 'drool') initDrool();
-    else if(mode === 'visitor') initVisitors();
-  }
+  initVisitors();
 
   function fmtCount(n){
     const value = Number(n);
     if(!Number.isFinite(value)) return '0';
     return Math.max(0, Math.floor(value)).toLocaleString('en-US');
-  }
-
-  function initDrool(){
-    const frame = document.getElementById('relicFrame');
-    const img = document.getElementById('relicImg');
-    const fx = document.getElementById('droolFx');
-    const tally = document.getElementById('droolTally');
-    const mineEl = document.getElementById('droolMine');
-    const flockLine = document.getElementById('droolFlockLine');
-    const flockEl = document.getElementById('droolFlock');
-    if(!frame || !img || !tally) return;
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'drool-hit';
-    btn.setAttribute('aria-label', 'tap the cat to drool');
-    const squish = document.createElement('span');
-    squish.className = 'drool-squish';
-    frame.insertBefore(btn, img);
-    squish.appendChild(img);
-    btn.appendChild(squish);
-    tally.hidden = false;
-
-    const localKey = 'droolingcat_drools';
-    let mine = 0;
-    try{ mine = Math.max(0, Math.floor(Number(localStorage.getItem(localKey)) || 0)); }
-    catch(e){ mine = 0; }
-    let pending = 0;
-    let inflight = 0;
-    let serverTotal = null;
-    let remoteOk = !!sbClient;
-    let flushTimer = null;
-    let retryTimer = null;
-    let audioCtx = null;
-    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    mineEl.textContent = fmtCount(mine);
-
-    function saveMine(){
-      try{ localStorage.setItem(localKey, String(mine)); }
-      catch(e){}
-    }
-    function showFlock(){
-      if(serverTotal == null){
-        flockLine.hidden = true;
-        return;
-      }
-      flockEl.textContent = fmtCount(serverTotal + pending + inflight);
-      flockLine.hidden = false;
-    }
-    function noteRemote(total){
-      const value = Number(total);
-      if(!Number.isFinite(value)) return;
-      if(serverTotal == null || value >= serverTotal) serverTotal = value;
-      remoteOk = true;
-      showFlock();
-    }
-    function remoteDown(){
-      remoteOk = false;
-      if(serverTotal == null) flockLine.hidden = true;
-      if(retryTimer) return;
-      retryTimer = setTimeout(() => {
-        retryTimer = null;
-        remoteOk = true;
-        pullTotal();
-      }, 30000);
-    }
-    async function pullTotal(){
-      if(!sbClient || !remoteOk) return;
-      const { data, error } = await sbClient.from('drool_counter').select('total').eq('id', 1).maybeSingle();
-      if(error || !data){
-        remoteDown();
-        return;
-      }
-      noteRemote(data.total);
-      if(pending > 0) scheduleFlush();
-    }
-    function scheduleFlush(){
-      if(flushTimer || inflight || !remoteOk || pending < 1) return;
-      flushTimer = setTimeout(runFlush, 2000);
-    }
-    async function runFlush(){
-      flushTimer = null;
-      if(!sbClient || !remoteOk || inflight || pending < 1) return;
-      const n = Math.min(pending, 50);
-      pending -= n;
-      inflight = n;
-      showFlock();
-      const { data, error } = await sbClient.rpc('add_drools', { n: n });
-      inflight = 0;
-      if(error){
-        pending += n;
-        remoteDown();
-        return;
-      }
-      noteRemote(data);
-      if(pending > 0) scheduleFlush();
-    }
-    function flushKeepalive(){
-      if(!remoteOk || pending < 1) return;
-      const n = Math.min(pending, 50);
-      pending -= n;
-      try{
-        fetch(SUPABASE_URL + '/rest/v1/rpc/add_drools', {
-          method: 'POST',
-          keepalive: true,
-          headers: {
-            apikey: SUPABASE_KEY,
-            Authorization: 'Bearer ' + SUPABASE_KEY,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ n: n })
-        });
-      }catch(e){}
-    }
-    function drip(){
-      try{
-        const AC = window.AudioContext || window.webkitAudioContext;
-        if(!AC) return;
-        if(!audioCtx) audioCtx = new AC();
-        const now = audioCtx.currentTime;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(520, now);
-        osc.frequency.exponentialRampToValueAtTime(180, now + 0.07);
-        gain.gain.setValueAtTime(0.04, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start(now);
-        osc.stop(now + 0.09);
-      }catch(e){}
-    }
-    function spawn(){
-      if(reduceMotion || !fx) return;
-      if(fx.childElementCount > 16) return;
-      const drop = document.createElement('span');
-      drop.className = 'drool-drop';
-      const drift = (Math.random() * 22 - 11);
-      drop.style.left = 'calc(52% + ' + drift.toFixed(1) + 'px)';
-      drop.style.top = '42%';
-      fx.appendChild(drop);
-      const plus = document.createElement('span');
-      plus.className = 'drool-plus';
-      plus.textContent = '+1';
-      plus.style.left = 'calc(66% + ' + (Math.random() * 28).toFixed(1) + 'px)';
-      plus.style.top = 'calc(18% + ' + (Math.random() * 16).toFixed(1) + 'px)';
-      fx.appendChild(plus);
-      const fall = Math.round(fx.clientHeight * 0.5);
-      drop.animate([
-        { transform: 'translate(-50%, 0) scale(.65)', opacity: 1 },
-        { transform: 'translate(-50%, ' + fall + 'px) scale(1)', opacity: 0 }
-      ], { duration: 680, easing: 'ease-in', fill: 'forwards' }).onfinish = () => drop.remove();
-      plus.animate([
-        { transform: 'translate(-50%, 0)', opacity: 1 },
-        { transform: 'translate(-50%, -42px)', opacity: 0 }
-      ], { duration: 560, easing: 'ease-out', fill: 'forwards' }).onfinish = () => plus.remove();
-      squish.getAnimations().forEach((anim) => anim.cancel());
-      squish.animate([
-        { transform: 'scale(1, 1)' },
-        { transform: 'scale(1.07, 0.9)', offset: 0.3 },
-        { transform: 'scale(0.98, 1.04)', offset: 0.65 },
-        { transform: 'scale(1, 1)' }
-      ], { duration: 170, easing: 'ease-out' });
-    }
-    function droolOnce(){
-      mine += 1;
-      pending += 1;
-      mineEl.textContent = fmtCount(mine);
-      saveMine();
-      showFlock();
-      spawn();
-      drip();
-      scheduleFlush();
-    }
-    btn.addEventListener('pointerdown', (event) => {
-      if(event.button != null && event.button !== 0) return;
-      if(event.pointerType === 'touch') event.preventDefault();
-      droolOnce();
-    });
-    btn.addEventListener('keydown', (event) => {
-      if(event.key !== 'Enter' && event.key !== ' ') return;
-      if(event.repeat) return;
-      event.preventDefault();
-      droolOnce();
-    });
-    window.addEventListener('pagehide', flushKeepalive);
-    pullTotal();
-    setInterval(pullTotal, 5000);
   }
 
   function initVisitors(){
